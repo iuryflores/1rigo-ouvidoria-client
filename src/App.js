@@ -1,13 +1,15 @@
 import "./App.css";
-import { Navbar } from "./components/Navbar";
-import { HomePage } from "./views/HomePage.js";
 import { Route, Routes } from "react-router-dom";
-import Footer from "./components/Footer";
-import { Complaints } from "./views/Complaints.js";
-import { SendComplaint } from "./views/SendComplaint.js";
-import { TrackComplaint } from "./views/TrackComplaint.js";
-import { Relationship } from "./views/Relationship";
-import { MoralHarassment } from "./views/MoralHarassment";
+
+import { Navbar, Footer } from "./components/index.js";
+import {
+  HomePage,
+  Complaints,
+  SendComplaint,
+  TrackComplaint,
+  Relationship,
+  MoralHarassment,
+} from "./views/index.js";
 
 function App() {
   return (

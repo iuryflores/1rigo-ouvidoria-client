@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo1RIGO from "../imgs/logo_white.png";
 import logoIHF from "../imgs/iury.png";
 
 import "./Navbar.css";
@@ -12,7 +11,7 @@ export const Navbar = () => {
         <div className="container">
           <div className="logo">
             <Link to="/">
-              <img src={logo1RIGO} alt="Logotipo 1RIGO" />
+              Canal de Denúncias
             </Link>
           </div>
           <div>
