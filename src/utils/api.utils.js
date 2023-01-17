@@ -9,7 +9,7 @@ class Api {
   addComplaint = async (complaintData, category) => {
     try {
       const { data } = await this.api.post(
-        `/addForm/${category}`,
+        `/add-complaint/${category}`,
         complaintData
       );
       return data;
