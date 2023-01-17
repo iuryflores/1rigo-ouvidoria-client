@@ -3,7 +3,7 @@ import logoIury from "../imgs/iury.png";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <footer className="d-flex flex-wrap justify-content-around align-items-center  border-top">
       <p className=" mb-0 ">
@@ -42,5 +42,3 @@ const Footer = () => {
     </footer>
   );
 };
-
-export default Footer;

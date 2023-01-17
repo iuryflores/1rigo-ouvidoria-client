@@ -1,10 +1,11 @@
-import React from "react";
 import "./css/HomePage.css";
 import { Link } from "react-router-dom";
+import { MsgSucess } from "../components/Shared";
 
-export const HomePage = () => {
+export const HomePage = ({ message, setMessage }) => {
   return (
     <div className="wrap">
+      {message && <MsgSucess>{message}</MsgSucess>}
       <section className="d-flex container wrap-site">
         <Link to="/complaints">
           <div className="card-body">

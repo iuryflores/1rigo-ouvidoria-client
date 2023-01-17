@@ -1,9 +1,59 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { MsgError } from "./Shared";
 
-export const Form = () => {
+export const Form = ({ message, setMessage }) => {
+  const [error, setError] = useState("");
+
+  //INPUTS
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [sector, setSector] = useState("");
+  const [involved, setInvolved] = useState("");
+  const [witness, setWitness] = useState("");
+  const [talkedAbout, setTalkedAbout] = useState("");
+  const [details, setDetails] = useState("");
+  const [previousComplaint, setPreviousComplaint] = useState("");
+  const [agreement, setAgreement] = useState("");
+
+  //SECTORS
+  let optionsSectors = [
+    "Selecione um departamento",
+    "Atendimento",
+    "Análise",
+    "Conferência",
+    "Incorporação",
+    "Ofício I",
+    "Ofício II",
+    "Treinamento",
+    "Telefone/Ouvidoria",
+    "Administrativo",
+    "Certidão",
+    "CEDOC",
+    "Contraditório/Finalização",
+    "Financeiro",
+    "Supervisão/Coordenação",
+    "Direção",
+    "Tecnologia da Informação",
+  ];
+
+  const showMessage = (error) => {
+    setError(error);
+    setTimeout(() => {
+      setError(error);
+    }, 3000);
+  };
+
+  useEffect(() => {
+    showMessage(error);
+  });
+
   return (
     <div>
       <section className="container mb-5 pb-5">
+        {error !== "" && <MsgError>{error}</MsgError>}
         <p className="p">Realizar Denúncia - Identificação</p>
         <form action="" method="post">
           <div className="mb-3">
@@ -12,6 +62,10 @@ export const Form = () => {
               type="text"
               name="nome"
               id="nome"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
               placeholder="Nome completo"
             />
           </div>
@@ -21,6 +75,10 @@ export const Form = () => {
               type="text"
               name="funcao"
               id="funcao"
+              value={role}
+              onChange={(e) => {
+                setRole(e.target.value);
+              }}
               placeholder="Função (caso seja colaborador)"
             />
           </div>
@@ -30,6 +88,10 @@ export const Form = () => {
               type="email"
               name="email"
               id="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               placeholder="Melhor e-mail"
             />
           </div>
@@ -39,6 +101,10 @@ export const Form = () => {
               type="phone"
               name="telefone"
               id="telefone"
+              value={telephone}
+              onChange={(e) => {
+                setTelephone(e.target.value);
+              }}
               placeholder="Telefone de contato"
             />
           </div>
@@ -78,28 +144,22 @@ export const Form = () => {
               name="departamento"
               id="departamento"
               aria-label="Default select example"
+              value={sector}
+              onChange={(e) => {
+                setSector(e.target.value);
+              }}
             >
-              <option selected="">Selecione um departamento</option>
-              <option value="Atendimento">Atendimento</option>
-              <option value="Atendimento">Análise</option>
-              <option value="Atendimento">Conferência</option>
-              <option value="Atendimento">Incorporação</option>
-              <option value="Atendimento">Ofício I</option>
-              <option value="Atendimento">Ofício II</option>
-              <option value="Atendimento">Treinamento</option>
-              <option value="Atendimento">Telefone/Ouvidoria</option>
-              <option value="Atendimento">Administrativo</option>
-              <option value="Atendimento">Certidão</option>
-              <option value="Atendimento">CEDOC</option>
-              <option value="Atendimento">Contraditório/Finalização</option>
-              <option value="Atendimento">Financeiro</option>
-              <option value="Atendimento">Supervisão/Coordenação</option>
-              <option value="Atendimento">Direção</option>
-              <option value="Atendimento">Tecnologia da Informação</option>
+              {optionsSectors.map((opt, id) => {
+                return (
+                  <option key={id} value={opt}>
+                    {opt}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="mb-3">
-            <label for="envolvidos">
+            <label htmlFor="envolvidos">
               Quem são os envolvidos?
               <span style={{ fontSize: "0.7rem" }}>
                 Nome, sobrenome, cargo, gerência, área, localidade, e-mail, etc.
@@ -111,10 +171,14 @@ export const Form = () => {
               id="envolvidos"
               cols="30"
               rows="5"
+              value={involved}
+              onChange={(e) => {
+                setInvolved(e.target.value);
+              }}
             ></textarea>
           </div>
           <div className="mb-3">
-            <label for="envolvidos">
+            <label htmlFor="witness">
               Quem presenciou o ocorrido?
               <span style={{ fontSize: "0.7rem" }}>
                 Dados de testemunhas: Nome, sobrenome, cargo, gerência, área,
@@ -123,54 +187,69 @@ export const Form = () => {
             </label>
             <textarea
               className="form-control"
-              name="envolvidos"
-              id="envolvidos"
+              name="witness"
+              id="witness"
               cols="30"
               rows="5"
+              value={witness}
+              onChange={(e) => {
+                setWitness(e.target.value);
+              }}
             ></textarea>
           </div>
           <div className="mb-3">
-            <label for="envolvidos">
+            <label htmlFor="talkedAbout">
               Você já conversou com alguém sobre essas informações? Se sim, com
               quem?
             </label>
             <textarea
               className="form-control"
-              name="envolvidos"
-              id="envolvidos"
+              name="talkedAbout"
+              id="talkedAbout"
               cols="30"
               rows="5"
+              value={talkedAbout}
+              onChange={(e) => {
+                setTalkedAbout(e.target.value);
+              }}
             ></textarea>
           </div>
           <div className="mb-3">
-            <label for="envolvidos">
+            <label htmlFor="details">
               Detalhamento da Denúncia (descreva em detalhe a situação,
               informando datas, locais, quantias e possíveis fatos que comprovem
               o relato)
             </label>
             <textarea
               className="form-control"
-              name="envolvidos"
-              id="envolvidos"
+              name="details"
+              id="details"
               cols="30"
               rows="5"
+              value={details}
+              onChange={(e) => {
+                setDetails(e.target.value);
+              }}
             ></textarea>
           </div>
           <div className="mb-3">
-            <label for="protocolo_anterior">
+            <label htmlFor="previousComplaint">
               Se esta denúncia está relacionada a uma denúncia anterior, informe
               abaixo o número do protocolo da denúncia anterior:
             </label>
             <input
               className="form-control"
               type="number"
-              name="protocolo_anterior"
-              id="protocolo_anterior"
-              placeholder=""
+              name="previousComplaint"
+              id="previousComplaint"
+              value={previousComplaint}
+              onChange={(e) => {
+                setPreviousComplaint(e.target.value);
+              }}
             />
           </div>
           <div className="mb-3">
-            <label for="formFile" className="form-label">
+            <label htmlFor="formFile" className="form-label">
               Se você quiser anexar arquivos como fotos e documentos,
               adicione-os aqui. O tamanho máximo do conjunto de arquivos é de
               100 MB.
@@ -198,10 +277,13 @@ export const Form = () => {
             <input
               className="form-check-input"
               type="checkbox"
-              value=""
+              value={agreement}
+              onChange={(e) => {
+                setAgreement(e.target.value);
+              }}
               id="flexCheckDefault"
             />
-            <label className="form-check-label" for="flexCheckDefault">
+            <label className="form-check-label" htmlFor="flexCheckDefault">
               <strong>
                 Estou ciente que todos os dados relatados ou disponibilizados
                 serão tratados nos termos descritos acima.
