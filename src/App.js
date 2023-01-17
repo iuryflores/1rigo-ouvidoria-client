@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
-import { Navbar, Footer } from "./components/index.js";
+import { Navbar, Footer } from "./components/index";
 import {
   HomePage,
   Complaints,
@@ -9,7 +9,7 @@ import {
   TrackComplaint,
   Relationship,
   MoralHarassment,
-} from "./views/index.js";
+} from "./views/index";
 import { useState } from "react";
 
 function App() {
