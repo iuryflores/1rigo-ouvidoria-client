@@ -52,7 +52,7 @@ function App() {
           setLoading={setLoading}
         />
         <Route
-          path="/addForm/:category"
+          path="/add-complaint/:category"
           element={
             <AddForm
               message={message}
