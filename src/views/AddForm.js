@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { MsgError } from "./Shared";
+import { MsgError } from "../components/Shared";
 import { useNavigate, useParams } from "react-router";
-
 
 import api from "../utils/api.utils.js";
 
-export const Form = ({ message, setMessage }) => {
+export const AddForm = ({ message, setMessage }) => {
   const [error, setError] = useState("");
 
   const { category } = useParams();
-
+  console.log(category);
   const navigator = useNavigate();
 
   //INPUTS
@@ -50,20 +49,24 @@ export const Form = ({ message, setMessage }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.addComplaint({
-        name,
-        role,
-        email,
-        telephone,
-        category,
-        sector,
-        involved,
-        witness,
-        talkedAbout,
-        details,
-        previousComplaint,
-        agreement,
-      });
+      await api.addComplaint(
+        {
+          name,
+          role,
+          email,
+          telephone,
+          category,
+          sector,
+          involved,
+          witness,
+          talkedAbout,
+          details,
+          previousComplaint,
+          agreement,
+        },
+        category
+      );
+      setMessage("Criado!");
     } catch (error) {
       showMessage(error);
     }

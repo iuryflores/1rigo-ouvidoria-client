@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
-import { Navbar, Footer } from "./components/index";
 import {
   HomePage,
   Complaints,
@@ -10,7 +10,9 @@ import {
   Relationship,
   MoralHarassment,
 } from "./views/index";
-import { useState } from "react";
+
+import { Navbar, Footer } from "./components/index";
+import { AddForm } from "./views/AddForm";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -51,9 +53,10 @@ function App() {
           setLoading={setLoading}
         />
         <Route
-          path="/moral_harassment"
+          path="/addForm/:category"
           element={
-            <MoralHarassment
+            <AddForm
+              
               message={message}
               setMessage={setMessage}
               loading={loading}
