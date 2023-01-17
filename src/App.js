@@ -8,7 +8,6 @@ import {
   SendComplaint,
   TrackComplaint,
   Relationship,
-  MoralHarassment,
 } from "./views/index";
 
 import { Navbar, Footer } from "./components/index";
@@ -56,7 +55,6 @@ function App() {
           path="/addForm/:category"
           element={
             <AddForm
-              
               message={message}
               setMessage={setMessage}
               loading={loading}

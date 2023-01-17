@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { MsgError } from "../components/Shared";
 import { useNavigate, useParams } from "react-router";
 
 import api from "../utils/api.utils.js";
 
-export const AddForm = ({ message, setMessage }) => {
+export const AddForm = ({ setMessage }) => {
   const [error, setError] = useState("");
 
   const { category } = useParams();
-  console.log(category);
-  const navigator = useNavigate();
+
+  const navigate = useNavigate();
 
   //INPUTS
   const [name, setName] = useState("");
@@ -22,7 +22,7 @@ export const AddForm = ({ message, setMessage }) => {
   const [talkedAbout, setTalkedAbout] = useState("");
   const [details, setDetails] = useState("");
   const [previousComplaint, setPreviousComplaint] = useState("");
-  const [agreement, setAgreement] = useState("");
+  const [agreement, setAgreement] = useState(false);
 
   //SECTORS
   let optionsSectors = [
@@ -48,6 +48,7 @@ export const AddForm = ({ message, setMessage }) => {
   //HANDLE SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("agreement", agreement);
     try {
       await api.addComplaint(
         {
@@ -67,6 +68,7 @@ export const AddForm = ({ message, setMessage }) => {
         category
       );
       setMessage("Criado!");
+      navigate('/')
     } catch (error) {
       showMessage(error);
     }
@@ -79,16 +81,11 @@ export const AddForm = ({ message, setMessage }) => {
     }, 3000);
   };
 
-  useEffect(() => {
-    showMessage(error);
-  });
-
   return (
     <div>
       <section className="container mb-5 pb-5">
-        {error !== "" && <MsgError>{error}</MsgError>}
         <p className="p">Realizar Denúncia - Identificação</p>
-        <form onSubmit={handleSubmit} method="post">
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <input
               className="form-control"
@@ -312,7 +309,7 @@ export const AddForm = ({ message, setMessage }) => {
               type="checkbox"
               value={agreement}
               onChange={(e) => {
-                setAgreement(e.target.value);
+                setAgreement(!agreement);
               }}
               id="flexCheckDefault"
             />
@@ -324,9 +321,10 @@ export const AddForm = ({ message, setMessage }) => {
             </label>
           </div>
           <div className="mb-3">
-            <button type="button" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Enviar denúncia
             </button>
+            {error !== "" && <MsgError>{error}</MsgError>}
           </div>
         </form>
       </section>
