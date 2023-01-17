@@ -1,9 +1,15 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { MsgError } from "./Shared";
+import React, {  useState } from "react";
+import { MsgError } from "../components/Shared";
+import { useNavigate, useParams } from "react-router";
 
-export const Form = ({ message, setMessage }) => {
+import api from "../utils/api.utils.js";
+
+export const AddForm = ({ setMessage }) => {
   const [error, setError] = useState("");
+
+  const { category } = useParams();
+
+  const navigate = useNavigate();
 
   //INPUTS
   const [name, setName] = useState("");
@@ -16,7 +22,7 @@ export const Form = ({ message, setMessage }) => {
   const [talkedAbout, setTalkedAbout] = useState("");
   const [details, setDetails] = useState("");
   const [previousComplaint, setPreviousComplaint] = useState("");
-  const [agreement, setAgreement] = useState("");
+  const [agreement, setAgreement] = useState(false);
 
   //SECTORS
   let optionsSectors = [
@@ -39,6 +45,35 @@ export const Form = ({ message, setMessage }) => {
     "Tecnologia da Informação",
   ];
 
+  //HANDLE SUBMIT
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("agreement", agreement);
+    try {
+      await api.addComplaint(
+        {
+          name,
+          role,
+          email,
+          telephone,
+          category,
+          sector,
+          involved,
+          witness,
+          talkedAbout,
+          details,
+          previousComplaint,
+          agreement,
+        },
+        category
+      );
+      setMessage("Criado!");
+      navigate('/')
+    } catch (error) {
+      showMessage(error);
+    }
+  };
+
   const showMessage = (error) => {
     setError(error);
     setTimeout(() => {
@@ -46,16 +81,11 @@ export const Form = ({ message, setMessage }) => {
     }, 3000);
   };
 
-  useEffect(() => {
-    showMessage(error);
-  });
-
   return (
     <div>
       <section className="container mb-5 pb-5">
-        {error !== "" && <MsgError>{error}</MsgError>}
         <p className="p">Realizar Denúncia - Identificação</p>
-        <form action="" method="post">
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <input
               className="form-control"
@@ -279,7 +309,7 @@ export const Form = ({ message, setMessage }) => {
               type="checkbox"
               value={agreement}
               onChange={(e) => {
-                setAgreement(e.target.value);
+                setAgreement(!agreement);
               }}
               id="flexCheckDefault"
             />
@@ -291,9 +321,10 @@ export const Form = ({ message, setMessage }) => {
             </label>
           </div>
           <div className="mb-3">
-            <button type="button" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Enviar denúncia
             </button>
+            {error !== "" && <MsgError>{error}</MsgError>}
           </div>
         </form>
       </section>
