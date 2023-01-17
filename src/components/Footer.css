@@ -8,3 +8,15 @@ footer {
 footer a:hover {
   border-bottom: 1px solid #0000a0;
 }
+
+@media (max-width: 900px) {
+  footer .logo {
+    display: none;
+  }
+  footer .nav {
+    display: none;
+  }
+  footer {
+    padding: 10px 0;
+  }
+}

@@ -11,7 +11,7 @@ import {
 } from "./views/index";
 
 import { Navbar, Footer } from "./components/index";
-import { AddForm } from "./views/AddForm";
+import { AddForm } from "./views/AddForm.js";
 
 function App() {
   const [message, setMessage] = useState(null);

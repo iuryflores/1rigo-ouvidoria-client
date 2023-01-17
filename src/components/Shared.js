@@ -5,6 +5,8 @@ export const MsgError = styled.div`
   padding: 5px 20px;
   margin-bottom: 10px;
   border-radius: 5px;
+  opacity: 1;
+  transition: opacity 2s linear;
 `;
 export const MsgSucess = styled.div`
   background-color: #afe1af;

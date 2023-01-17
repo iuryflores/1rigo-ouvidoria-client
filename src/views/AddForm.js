@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { MsgError } from "../components/Shared";
 import { useNavigate, useParams } from "react-router";
 
@@ -6,17 +6,18 @@ import api from "../utils/api.utils.js";
 
 export const AddForm = ({ setMessage }) => {
   const [error, setError] = useState("");
+  const [type, setType] = useState(false);
 
   const { category } = useParams();
 
   const navigate = useNavigate();
 
   //INPUTS
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
-  const [email, setEmail] = useState("");
-  const [telephone, setTelephone] = useState("");
-  const [sector, setSector] = useState("");
+  const [name, setName] = useState(null);
+  const [role, setRole] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [telephone, setTelephone] = useState(null);
+  const [sector, setSector] = useState("Selecione um departamento");
   const [involved, setInvolved] = useState("");
   const [witness, setWitness] = useState("");
   const [talkedAbout, setTalkedAbout] = useState("");
@@ -48,7 +49,7 @@ export const AddForm = ({ setMessage }) => {
   //HANDLE SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("agreement", agreement);
+
     try {
       await api.addComplaint(
         {
@@ -67,8 +68,8 @@ export const AddForm = ({ setMessage }) => {
         },
         category
       );
-      setMessage("Criado!");
-      navigate('/')
+      setMessage(`Sua reclamação foi enviada com sucesso! Entraremos em contato o mais breve possível.`);
+      navigate("/");
     } catch (error) {
       showMessage(error);
     }
@@ -77,67 +78,90 @@ export const AddForm = ({ setMessage }) => {
   const showMessage = (error) => {
     setError(error);
     setTimeout(() => {
-      setError(error);
-    }, 3000);
+      setError("");
+    }, 6000);
   };
-
+  const showID = () => {
+    console.log("entrei no sim");
+    setType(true);
+  };
+  const closeID = () => {
+    setType(false);
+    setName(null);
+  };
   return (
     <div>
       <section className="container mb-5 pb-5">
         <p className="p">Realizar Denúncia - Identificação</p>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <input
-              className="form-control"
-              type="text"
-              name="nome"
-              id="nome"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              placeholder="Nome completo"
-            />
+          <div>
+            Deseja se identificar?{"   "}
+            <p onClick={showID} className="btn btn-primary">
+              Sim
+            </p>{" "}
+            <p onClick={closeID} className="btn btn-primary">
+              Não
+            </p>
           </div>
-          <div className="mb-3">
-            <input
-              className="form-control"
-              type="text"
-              name="funcao"
-              id="funcao"
-              value={role}
-              onChange={(e) => {
-                setRole(e.target.value);
-              }}
-              placeholder="Função (caso seja colaborador)"
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              className="form-control"
-              type="email"
-              name="email"
-              id="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Melhor e-mail"
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              className="form-control"
-              type="phone"
-              name="telefone"
-              id="telefone"
-              value={telephone}
-              onChange={(e) => {
-                setTelephone(e.target.value);
-              }}
-              placeholder="Telefone de contato"
-            />
-          </div>
+          {type ? (
+            <>
+              <div className="mb-3">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="nome"
+                  id="nome"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  placeholder="Nome completo"
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="funcao"
+                  id="funcao"
+                  value={role}
+                  onChange={(e) => {
+                    setRole(e.target.value);
+                  }}
+                  placeholder="Função (caso seja colaborador)"
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  className="form-control"
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  placeholder="Melhor e-mail"
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  className="form-control"
+                  type="phone"
+                  name="telefone"
+                  id="telefone"
+                  value={telephone}
+                  onChange={(e) => {
+                    setTelephone(e.target.value);
+                  }}
+                  placeholder="Telefone de contato"
+                />
+              </div>
+            </>
+          ) : (
+            <></>
+          )}
+          <hr />
           <p className="p">Detalhamento</p>
           <p>
             Nos campos abaixo você deve descrever a situação de descumprimento
@@ -278,7 +302,7 @@ export const AddForm = ({ setMessage }) => {
               }}
             />
           </div>
-          <div className="mb-3">
+          {/*<div className="mb-3">
             <label htmlFor="formFile" className="form-label">
               Se você quiser anexar arquivos como fotos e documentos,
               adicione-os aqui. O tamanho máximo do conjunto de arquivos é de
@@ -286,7 +310,7 @@ export const AddForm = ({ setMessage }) => {
             </label>
             <input className="form-control" type="file" id="formFile" />
           </div>
-
+            */}
           <div className="mb-3">
             <p>
               Todas as informações aqui registradas serão recebidas pelo comitê
@@ -320,11 +344,11 @@ export const AddForm = ({ setMessage }) => {
               </strong>
             </label>
           </div>
-          <div className="mb-3">
+          <div className="mb-5">
+            {error !== "" && <MsgError id="erroID">{error}</MsgError>}
             <button type="submit" className="btn btn-primary">
               Enviar denúncia
             </button>
-            {error !== "" && <MsgError>{error}</MsgError>}
           </div>
         </form>
       </section>

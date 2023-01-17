@@ -10,32 +10,29 @@ export const Navbar = () => {
       <nav>
         <div className="container">
           <div className="logo">
-            <Link to="/">
-              Canal de Denúncias
-            </Link>
+            <Link to="/">Canal de Denúncias</Link>
           </div>
-          <div>
+          <div className="logo">
             <img src={logoIHF} alt="Logotipo Iury" />
           </div>
-          <div>
-            <ul className="nav justify-content-end">
-              <li className="nav-item">
-                <Link to="/send-complaint" className="nav-link px-2 ">
-                  Faça uma denúncia
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/track-complaint" className="nav-link px-2 ">
-                  Acompanhe sua denúncia
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/send-question" className="nav-link px-2 ">
-                  Envie uma dúvida
-                </Link>
-              </li>
-            </ul>
-          </div>
+
+          <ul className="nav justify-content-end">
+            <li className="nav-item">
+              <Link to="/send-complaint" className="nav-link px-2 ">
+                Faça uma denúncia
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/track-complaint" className="nav-link px-2 ">
+                Acompanhe sua denúncia
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/send-question" className="nav-link px-2 ">
+                Envie uma dúvida
+              </Link>
+            </li>
+          </ul>
         </div>
       </nav>
       <div className="container back"></div>

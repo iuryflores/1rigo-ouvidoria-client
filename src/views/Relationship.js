@@ -30,7 +30,7 @@ export const Relationship = () => {
         </div>
 
         <div>
-          <a href="assedio_moral.php">
+          <a href="/add-complaint/assedio_moral">
             <i className="bi bi-chat-right-quote"></i>
             <div className="inside-denuncia">
               <p>Assédio Sexual</p>
@@ -49,7 +49,7 @@ export const Relationship = () => {
           </a>
         </div>
         <div>
-          <a href="assedio_moral.php">
+          <a href="/add-complaint/gestao_inadequada">
             <i className="bi bi-chat-right-quote"></i>
             <div className="inside-denuncia">
               <p>Gestão inadequada de pessoas</p>
@@ -62,7 +62,7 @@ export const Relationship = () => {
           </a>
         </div>
         <div>
-          <a href="assedio_moral.php">
+          <a href="/add-complaint/discriminacao">
             <i className="bi bi-chat-right-quote"></i>
             <div className="inside-denuncias">
               <p>Discriminação</p>

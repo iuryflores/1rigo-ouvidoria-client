@@ -1,13 +1,22 @@
 import "./css/HomePage.css";
 import { Link } from "react-router-dom";
 import { MsgSucess } from "../components/Shared";
+import { useEffect } from "react";
 
 export const HomePage = ({ message, setMessage }) => {
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage(null);
+    }, 10000);
+  }, [message, setMessage]);
+
   return (
-    <div className="wrap">
-      {message && <MsgSucess>{message}</MsgSucess>}
-      <section className="d-flex container wrap-site">
-        <Link to="/complaints">
+    <div className="wrap container">
+      <div>
+        {message && <MsgSucess>{message}</MsgSucess>}
+      </div>
+      <section className="d-flex container wrap-site row">
+        <Link to="/complaints" className="col-sm-12 col-md-5 col-lg-4">
           <div className="card-body">
             <p>
               <i className="bi bi-chat-right-quote"></i>
@@ -18,7 +27,7 @@ export const HomePage = ({ message, setMessage }) => {
             </span>
           </div>
         </Link>
-        <Link to="/track-complaint">
+        <Link to="/track-complaint" className="col-sm-12 col-md-5 col-lg-4">
           <div className="card-body">
             <p>
               <i className="bi bi-folder-plus"></i>
@@ -29,7 +38,7 @@ export const HomePage = ({ message, setMessage }) => {
             </span>
           </div>
         </Link>
-        <Link to="/send-question">
+        <Link to="/send-question" className="col-sm-12 col-md-4 col-lg-4">
           <div className="card-body">
             <p>
               <i className="bi bi-patch-question"></i>
