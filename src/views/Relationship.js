@@ -14,7 +14,7 @@ export const Relationship = () => {
       </section>
       <section className="container denuncias-index">
         <div>
-          <Link to="/moral_harassment">
+          <Link to="/addForm/moral_harassment">
             <i className="bi bi-chat-right-quote"></i>
             <div className="inside-denuncia">
               <p>Assédio Moral</p>
