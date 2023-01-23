@@ -12,6 +12,7 @@ class Api {
         `/add-complaint/${category}`,
         complaintData
       );
+      console.log(data)
       return data;
     } catch (error) {
       throw error.response.data.msg;

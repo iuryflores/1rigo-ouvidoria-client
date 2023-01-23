@@ -13,10 +13,10 @@ export const AddForm = ({ setMessage }) => {
   const navigate = useNavigate();
 
   //INPUTS
-  const [name, setName] = useState(null);
-  const [role, setRole] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [telephone, setTelephone] = useState(null);
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
   const [sector, setSector] = useState("Selecione um departamento");
   const [involved, setInvolved] = useState("");
   const [witness, setWitness] = useState("");
@@ -51,7 +51,17 @@ export const AddForm = ({ setMessage }) => {
     e.preventDefault();
 
     try {
-      await api.addComplaint(
+      let chars =
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@#$%^&*";
+      let passwordLength = 10;
+      let password = "";
+
+      for (let i = 0; i < passwordLength; i++) {
+        let randomNumber = Math.floor(Math.random() * chars.length);
+        password += chars.substring(randomNumber, randomNumber + 1);
+      }
+
+      const insert = await api.addComplaint(
         {
           name,
           role,
@@ -64,11 +74,16 @@ export const AddForm = ({ setMessage }) => {
           talkedAbout,
           details,
           previousComplaint,
+          password,
           agreement,
         },
         category
       );
-      setMessage(`Sua reclamação foi enviada com sucesso! Entraremos em contato o mais breve possível.`);
+    
+
+      setMessage(
+        `Sua reclamação foi enviada com sucesso! Entraremos em contato o mais breve possível. Acompanhe sua solicitação pelo número de protocolo: ${insert.protocolo_id} e a senha para acesso: ${password}`
+      );
       navigate("/");
     } catch (error) {
       showMessage(error);
@@ -89,6 +104,7 @@ export const AddForm = ({ setMessage }) => {
     setType(false);
     setName(null);
   };
+
   return (
     <div>
       <section className="container mb-5 pb-5">
@@ -302,15 +318,6 @@ export const AddForm = ({ setMessage }) => {
               }}
             />
           </div>
-          {/*<div className="mb-3">
-            <label htmlFor="formFile" className="form-label">
-              Se você quiser anexar arquivos como fotos e documentos,
-              adicione-os aqui. O tamanho máximo do conjunto de arquivos é de
-              100 MB.
-            </label>
-            <input className="form-control" type="file" id="formFile" />
-          </div>
-            */}
           <div className="mb-3">
             <p>
               Todas as informações aqui registradas serão recebidas pelo comitê

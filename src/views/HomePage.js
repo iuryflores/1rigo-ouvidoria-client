@@ -4,10 +4,11 @@ import { MsgSucess } from "../components/Shared";
 import { useEffect } from "react";
 
 export const HomePage = ({ message, setMessage }) => {
+
   useEffect(() => {
     setTimeout(() => {
       setMessage(null);
-    }, 10000);
+    }, 1000000);
   }, [message, setMessage]);
 
   return (
