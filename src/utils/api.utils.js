@@ -18,6 +18,17 @@ class Api {
       throw error.response.data.msg;
     }
   };
+  checkPassword = async (protocolo_id, senha) => {
+    try {
+      const { data } = await this.api.post(
+        `/track-complaint/${protocolo_id}/${senha}/`
+      );
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+
   trackComplaint = async (protocolo_id, pass_protocolo) => {
     try {
       const { data } = await this.api.get(
