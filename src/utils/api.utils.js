@@ -12,7 +12,17 @@ class Api {
         `/add-complaint/${category}`,
         complaintData
       );
-      console.log(data)
+      console.log(data);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  trackComplaint = async (protocolo_id, pass_protocolo) => {
+    try {
+      const { data } = await this.api.get(
+        `/track-complaint/${protocolo_id}/${pass_protocolo}`
+      );
       return data;
     } catch (error) {
       throw error.response.data.msg;

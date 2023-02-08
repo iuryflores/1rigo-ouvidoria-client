@@ -7,6 +7,7 @@ import {
   Complaints,
   SendComplaint,
   TrackComplaint,
+  TrackingComplaint,
   Relationship,
 } from "./views/index";
 
@@ -77,6 +78,17 @@ function App() {
           path="/track-complaint"
           element={
             <TrackComplaint
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          }
+        />
+        <Route
+          path="/track-complaint/:protocolo_id/:pass_protocolo"
+          element={
+            <TrackingComplaint
               message={message}
               setMessage={setMessage}
               loading={loading}
