@@ -106,7 +106,7 @@ export const AddForm = ({ setMessage }) => {
   };
 
   return (
-    <div>
+    <div className="">
       <section className="container mb-5 pb-5">
         <p className="p">Realizar Denúncia - Identificação</p>
         <form onSubmit={handleSubmit}>

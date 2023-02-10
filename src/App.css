@@ -1,7 +1,13 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+
+
 .App {
   text-align: center;
 }
-
+.container {
+  color: #282c34;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -28,7 +34,7 @@ strong {
   margin-bottom: 100px;
 }
 .App-header {
-  background-color: #282c34;
+  
   min-height: 100vh;
   display: flex;
   flex-direction: column;

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const MsgError = styled.div`
   background-color: #fa8072;
+  color:white;
   padding: 5px 20px;
   margin-bottom: 10px;
   border-radius: 5px;

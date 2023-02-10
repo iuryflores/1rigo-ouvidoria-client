@@ -6,4 +6,5 @@ export * from "./Relationship";
 export * from "./AddForm.js";
 export * from "./HomePage.js";
 export * from "./AdminLogin.js";
+export * from "./AdminHome.js";
 

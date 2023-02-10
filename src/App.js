@@ -10,10 +10,12 @@ import {
   TrackingComplaint,
   Relationship,
   AdminLogin,
-  AddForm
+  AddForm,
+  AdminHome
 } from "./views/index";
 
 import { Navbar, Footer } from "./components/index";
+
 
 
 function App() {
@@ -23,7 +25,7 @@ function App() {
   let location = useLocation().pathname
 
   return (
-    <>
+    <div>
     {location !== "/admin/login" && location !== "/admin/home" && <Navbar />}
       <Routes>
         <Route
@@ -111,10 +113,21 @@ function App() {
             />
           }
         />
+         <Route
+          path="/admin/home"
+          element={
+            <AdminHome
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          }
+        />
       </Routes>
 
-      <Footer />
-    </>
+      {location !== "/admin/login" && location !== "/admin/signup" && <Footer />}
+    </div>
   );
 }
 

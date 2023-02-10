@@ -12,7 +12,7 @@ export const HomePage = ({ message, setMessage }) => {
   }, [message, setMessage]);
 
   return (
-    <div className="wrap container">
+    <div className="wrap container pt-3">
       <div>
         {message && <MsgSucess>{message}</MsgSucess>}
       </div>
