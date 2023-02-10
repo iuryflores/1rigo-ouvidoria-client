@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../utils/api.utils";
+import { MsgError } from "../components/Shared";
 
 export const TrackComplaint = ({
   message,
@@ -20,7 +21,7 @@ export const TrackComplaint = ({
     try {
       const data = await api.checkPassword(protocolo, senha);
       console.log(data);
-      // navigate(`/track-complaint/${protocolo}/${senha}`);
+      navigate(`/track-complaint/${protocolo}/${senha}`);
     } catch (error) {
       setMessage(error);
     }
@@ -28,28 +29,31 @@ export const TrackComplaint = ({
   useEffect(() => {
     setTimeout(() => {
       setMessage(null);
-    }, 15000);
+    }, 10000);
   });
   return (
     <div className="container d-flex flex-column align-items-center">
-      <h3>Acompanhe sua denúncia</h3>
-      <form onSubmit={handleSubmit} className='d-flex flex-column w-75'>
-        {message !== null && <div>{message}</div>}
+      <h3>Acompanhe sua manifestação</h3>
+      <form onSubmit={handleSubmit} className="d-flex flex-column w-75">
+        {message !== null && (
+          <MsgError className="text-center">{message}</MsgError>
+        )}
+        <label>Número do protocolo:</label>
         <input
-        className="form-control mb-3"
+          className="form-control mb-3"
           type="number"
           name="protocolo"
           value={protocolo}
-          placeholder='Digite o número do protocolo'
           onChange={(e) => {
             setProtocolo(e.target.value);
           }}
         />
-        <input className="form-control mb-3"
-          type="text"
+        <labe>Senha:</labe>
+        <input
+          className="form-control mb-3"
+          type="password"
           name="senha"
           value={senha}
-          placeholder='Digite a senha do protocolo'
           onChange={(e) => {
             setSenha(e.target.value);
           }}

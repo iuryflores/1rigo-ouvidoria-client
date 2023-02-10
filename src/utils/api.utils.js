@@ -5,7 +5,48 @@ class Api {
     this.api = axios.create({
       baseURL: "http://localhost:5000/",
     });
+    this.api.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          config.headers = {
+            Autorization: `Bearer ${token}`,
+          };
+        }
+        return config;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.api.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response.status === 401) {
+          localStorage.removeItem("token");
+          window.location = "/admin/login";
+        }
+        throw error;
+      }
+    );
   }
+  login = async (loginInfo) => {
+    try {
+      const { data } = await this.api.post("/user/auth/login", loginInfo);
+      localStorage.setItem("token", data.token);
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  signup = async (signupInfo) => {
+    try {
+      const { data } = await this.api.post("/user/auth/login", signupInfo);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+
   addComplaint = async (complaintData, category) => {
     try {
       const { data } = await this.api.post(

@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 import {
@@ -9,18 +9,22 @@ import {
   TrackComplaint,
   TrackingComplaint,
   Relationship,
+  AdminLogin,
+  AddForm
 } from "./views/index";
 
 import { Navbar, Footer } from "./components/index";
-import { AddForm } from "./views/AddForm.js";
+
 
 function App() {
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  let location = useLocation().pathname
+
   return (
     <>
-      <Navbar />
+    {location !== "/admin/login" && location !== "/admin/home" && <Navbar />}
       <Routes>
         <Route
           path="/"
@@ -96,7 +100,19 @@ function App() {
             />
           }
         />
+        <Route
+          path="/admin/login"
+          element={
+            <AdminLogin
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          }
+        />
       </Routes>
+
       <Footer />
     </>
   );
