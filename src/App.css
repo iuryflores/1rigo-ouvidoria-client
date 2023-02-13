@@ -32,6 +32,7 @@ strong {
 .espacamento-100 {
   color: white;
   margin-bottom: 100px;
+  background-color: white !important;
 }
 .App-header {
   

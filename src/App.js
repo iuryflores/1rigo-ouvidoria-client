@@ -126,7 +126,7 @@ function App() {
         />
       </Routes>
 
-      {location !== "/admin/login" && location !== "/admin/signup" && <Footer />}
+      {location !== "/admin/login" && location !== "/admin/signup" && location !== "/admin/home" && <Footer />}
     </div>
   );
 }
