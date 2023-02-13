@@ -1,3 +1,8 @@
-.number-stat{
+.number-stat {
   font-size: 5rem;
+}
+.espacamento-200 {
+  margin-top: 200px;
+  border: 0;
+  color: white;
 }

@@ -1,7 +1,7 @@
-.admin-home .nav-admin {
+.nav-admin {
   display: flex;
 }
-.admin-home .nav-admin ul {
+.nav-admin ul {
   list-style-type: none;
   display: flex;
   width: 100%;
@@ -9,7 +9,7 @@
   justify-content: space-evenly;
   margin: 0 !important;
 }
-.admin-home .link {
+.nav-admin .link {
   display: flex;
   flex-direction: column;
   color: white !important;
@@ -18,10 +18,10 @@
   font-weight: 500;
   transition: all 0.3s !important;
 }
-.admin-home .link i {
+.nav-admin .link i {
   font-size: 25px;
 }
-.admin-home .link:hover {
+.nav-admin .link:hover {
   background-color: white;
   color: #282c34 !important;
 }

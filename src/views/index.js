@@ -5,6 +5,6 @@ export * from "./TrackingComplaint.js";
 export * from "./Relationship";
 export * from "./AddForm.js";
 export * from "./HomePage.js";
-export * from "./AdminLogin.js";
-export * from "./AdminHome.js";
 
+export * from "./Fraudes.js";
+export * from "./Saude.js";

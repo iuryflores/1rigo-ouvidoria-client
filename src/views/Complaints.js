@@ -29,26 +29,21 @@ export const Complaints = () => {
           </Link>
         </div>
         <div>
-          <a href="corrupcao.php">
+          <Link to="/fraudes">
             <i className="bi bi-chat-right-quote"></i>
             <p>Denúncias sobre Fraudes, Corrupção, Atividades ilícitas</p>
-          </a>
+          </Link>
         </div>
         <div>
-          <a href="relacionamento.php">
+          <Link to="/saude-meio-ambiente">
             <i className="bi bi-chat-right-quote"></i>
             <p>
               Denúncias sobre Saúde, Segurança, Meio Ambiente e Riscos
               Operacionais
             </p>
-          </a>
+          </Link>
         </div>
-        <div>
-          <a href="relacionamento.php">
-            <i className="bi bi-chat-right-quote"></i>
-            <p>Consultas</p>
-          </a>
-        </div>
+       
       </section>
     </div>
   );

@@ -9,24 +9,27 @@ import {
   TrackComplaint,
   TrackingComplaint,
   Relationship,
-  AdminLogin,
+  Fraudes,
+  Saude,
   AddForm,
-  AdminHome
 } from "./views/index";
 
+import { AdminLogin, AdminHome, Categoria } from "./views/Admin/index.js";
+
 import { Navbar, Footer } from "./components/index";
-
-
 
 function App() {
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  let location = useLocation().pathname
+  let location = useLocation().pathname;
 
   return (
     <div>
-    {location !== "/admin/login" && location !== "/admin/home" && <Navbar />}
+      {location !== "/admin/login/" &&
+        location !== "/admin/home/" &&
+        location !== "/admin/complaints/assedio-moral/" &&
+        location !== "/admin/complaints/assedio-sexual/" && <Navbar />}
       <Routes>
         <Route
           path="/"
@@ -53,6 +56,22 @@ function App() {
         <Route
           path="/relationship"
           element={<Relationship />}
+          message={message}
+          setMessage={setMessage}
+          loading={loading}
+          setLoading={setLoading}
+        />
+        <Route
+          path="/fraudes"
+          element={<Fraudes />}
+          message={message}
+          setMessage={setMessage}
+          loading={loading}
+          setLoading={setLoading}
+        />
+        <Route
+          path="/saude-meio-ambiente"
+          element={<Saude />}
           message={message}
           setMessage={setMessage}
           loading={loading}
@@ -113,7 +132,7 @@ function App() {
             />
           }
         />
-         <Route
+        <Route
           path="/admin/home"
           element={
             <AdminHome
@@ -124,9 +143,23 @@ function App() {
             />
           }
         />
+        <Route
+          path="/admin/complaints/:categoria/"
+          element={
+            <Categoria
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          }
+        />
       </Routes>
 
-      {location !== "/admin/login" && location !== "/admin/signup" && location !== "/admin/home" && <Footer />}
+      {location !== "/admin/login" &&
+        location !== "/admin/signup" &&
+        location !== "/admin/home" &&
+        location !== "/admin/complaints/assedio-moral" && <Footer />}
     </div>
   );
 }

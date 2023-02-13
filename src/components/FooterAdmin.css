@@ -4,5 +4,25 @@
   }
 }
 .nav2-admin {
-padding: 0 !important;
+  position: fixed !important;
+  top: auto !important;
+  bottom: 0 !important;
+  padding: 0 !important;
+}
+.nav2-admin ul {
+  list-style-type: none;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0 !important;
+}
+.nav2-admin .link {
+  display: flex;
+  flex-direction: column;
+  color: white !important;
+  align-items: center;
+  padding: 30px;
+  font-weight: 500;
+  transition: all 0.3s !important;
 }

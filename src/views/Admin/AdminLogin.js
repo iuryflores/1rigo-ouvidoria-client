@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import api from "../utils/api.utils";
+import api from "../../utils/api.utils";
 import { Link, useNavigate } from "react-router-dom";
-import "./css/LoginPage.css";
-import logo1RIGO from "../imgs/logo.png";
+import "../css/LoginPage.css";
+import logo1RIGO from "../../imgs/logo.png";
 
-import { MsgSucess, MsgError } from "../components/Shared";
+import { MsgSucess, MsgError } from "../../components/Shared";
 
 export const AdminLogin = ({ message, setMessage }) => {
   const [email, setEmail] = useState("");
@@ -69,7 +69,7 @@ export const AdminLogin = ({ message, setMessage }) => {
           <button className="btn btn-primary" type="submit">
             Login
           </button>
-          <p>
+          <p className="mt-3">
             Não possui uma conta? <Link to="/user/auth/signup">Criar</Link>
           </p>
         </form>

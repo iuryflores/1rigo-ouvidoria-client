@@ -14,7 +14,7 @@ export const Relationship = () => {
       </section>
       <section className="container denuncias-index">
         <div>
-          <Link to="/add-complaint/moral_harassment">
+          <Link to="/add-complaint/assedio-moral">
             <i className="bi bi-chat-right-quote"></i>
             <div className="inside-denuncia">
               <p>Assédio Moral</p>
@@ -30,7 +30,7 @@ export const Relationship = () => {
         </div>
 
         <div>
-          <a href="/add-complaint/assedio_moral">
+          <a href="/add-complaint/assedio-sexual">
             <i className="bi bi-chat-right-quote"></i>
             <div className="inside-denuncia">
               <p>Assédio Sexual</p>
@@ -49,7 +49,7 @@ export const Relationship = () => {
           </a>
         </div>
         <div>
-          <a href="/add-complaint/gestao_inadequada">
+          <a href="/add-complaint/gestao-inadequada">
             <i className="bi bi-chat-right-quote"></i>
             <div className="inside-denuncia">
               <p>Gestão inadequada de pessoas</p>
