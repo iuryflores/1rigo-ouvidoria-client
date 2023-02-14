@@ -23,13 +23,11 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   let location = useLocation().pathname;
+  let newLocation = location.slice(0, 7);
 
   return (
     <div>
-      {location !== "/admin/login/" &&
-        location !== "/admin/home/" &&
-        location !== "/admin/complaints/assedio-moral/" &&
-        location !== "/admin/complaints/assedio-sexual/" && <Navbar />}
+      {newLocation !== "/admin/" && <Navbar />}
       <Routes>
         <Route
           path="/"
@@ -156,10 +154,7 @@ function App() {
         />
       </Routes>
 
-      {location !== "/admin/login" &&
-        location !== "/admin/signup" &&
-        location !== "/admin/home" &&
-        location !== "/admin/complaints/assedio-moral" && <Footer />}
+      <Footer />
     </div>
   );
 }

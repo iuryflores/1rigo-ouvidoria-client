@@ -3,6 +3,8 @@ import api from "../../utils/api.utils";
 import { useParams } from "react-router-dom";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
+import loadingGif from "../../imgs/loading-state.gif";
+
 import "../css/AdminHome.css";
 export const Categoria = ({ loading, setLoading }) => {
   const { categoria } = useParams();
@@ -57,7 +59,7 @@ export const Categoria = ({ loading, setLoading }) => {
     getDenuncias();
   }, [loading, setLoading]);
   let count = 0;
-  return !loading ? (
+  return (
     <div>
       <NavbarAdmin />
       <div className="container">
@@ -71,9 +73,13 @@ export const Categoria = ({ loading, setLoading }) => {
               <th scope="col">#</th>
               <th scope="col">Data</th>
               <th scope="col">Setor</th>
-              <th scope="col">Categoria</th>
+              <th scope="col" className="no-mobile">
+                Categoria
+              </th>
               <th scope="col">Protocolo</th>
-              <th scope="col">Reclamante</th>
+              <th scope="col" className="no-mobile">
+                Reclamante
+              </th>
               <th scope="col">Status</th>
               <th className="text-center" scope="col">
                 Ações
@@ -81,39 +87,52 @@ export const Categoria = ({ loading, setLoading }) => {
             </tr>
           </thead>
           <tbody>
-            {denuncias.map((denuncia, index) => {
-              if (denuncia.category === categoria) {
-                count++;
-                return (
-                  <tr key={index}>
-                    <th scope="row">{count}</th>
-                    <td>
-                      {new Date(
-                        denuncia.createdAt.slice(0, -1)
-                      ).toLocaleDateString("pt-br", {
-                        day: "numeric",
-                        month: "numeric",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td>{denuncia.sector}</td>
-                    <td>{newCategoria}</td>
-                    <td>{denuncia.protocolo_id}</td>
-                    <td>{denuncia.name || "Anônimo"}</td>
-                    <td>{denuncia.status}</td>
-                    <td className="text-center">
-                      <i className="bi bi-eye-fill"></i>
-                    </td>
-                  </tr>
-                );
-              }
-            })}
+            {!loading ? (
+              denuncias.map((denuncia, index) => {
+                if (denuncia.category === categoria) {
+                  count++;
+                  return (
+                    <tr key={index}>
+                      <th scope="row">{count}</th>
+                      <td>
+                        {new Date(
+                          denuncia.createdAt.slice(0, -1)
+                        ).toLocaleDateString("pt-br", {
+                          day: "numeric",
+                          month: "numeric",
+                          year: "numeric",
+                        })}
+                      </td>
+                      <td>{denuncia.sector}</td>
+                      <td className="no-mobile">{newCategoria}</td>
+                      <td>{denuncia.protocolo_id}</td>
+                      <td className="no-mobile">
+                        {denuncia.name || "Anônimo"}
+                      </td>
+                      <td>{denuncia.status}</td>
+                      <td className="text-center">
+                        <i className="bi bi-eye-fill"></i>
+                      </td>
+                    </tr>
+                  );
+                }
+                return "";
+              })
+            ) : (
+              <tr>
+                <td colSpan="8" className="text-center">
+                  <img
+                    style={{ width: "100px" }}
+                    src={loadingGif}
+                    alt="Loading gif"
+                  />
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
       <FooterAdmin />
     </div>
-  ) : (
-    <>Loading...</>
   );
 };
