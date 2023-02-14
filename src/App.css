@@ -30,9 +30,10 @@ strong {
   font-weight: 500;
 }
 .espacamento-100 {
-  color: white;
+  color: white !important;
+  border : 0 !important;
   margin-bottom: 100px;
-  background-color: white !important;
+  
 }
 .App-header {
   

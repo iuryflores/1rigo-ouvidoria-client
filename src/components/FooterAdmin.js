@@ -12,11 +12,11 @@ export const FooterAdmin = () => {
             <i className="bi bi-house-door-fill"></i>
             <span>HOME</span>
           </Link>
-          <Link to="/admin/home/" className="link ">
+          <Link to="/admin/manifestacoes/" className="link ">
             <i className="bi bi-chat-right-quote-fill"></i>
             <span>MANIFESTAÇÕES</span>
           </Link>
-          <Link to="/admin/home/" className="link ">
+          <Link to="/admin/home/" className="link no-mobile">
             <i className="bi bi-people-fill"></i>
             <span>USUÁRIOS</span>
           </Link>
@@ -26,6 +26,7 @@ export const FooterAdmin = () => {
           </Link>
         </ul>
       </nav>
+      <hr className="espacamento-100" />
     </>
   );
 };

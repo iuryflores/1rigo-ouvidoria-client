@@ -14,7 +14,7 @@ import {
   AddForm,
 } from "./views/index";
 
-import { AdminLogin, AdminHome, Categoria } from "./views/Admin/index.js";
+import { AdminLogin, AdminHome, Categoria , Denuncia,Manifestacoes} from "./views/Admin/index.js";
 
 import { Navbar, Footer } from "./components/index";
 
@@ -142,6 +142,17 @@ function App() {
           }
         />
         <Route
+          path="/admin/manifestacoes"
+          element={
+            <Manifestacoes
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          }
+        />
+        <Route
           path="/admin/complaints/:categoria/"
           element={
             <Categoria
@@ -152,8 +163,19 @@ function App() {
             />
           }
         />
-      </Routes>
 
+        <Route
+          path="/admin/denuncia/:id/"
+          element={
+            <Denuncia
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          }
+        />
+      </Routes>
       <Footer />
     </div>
   );

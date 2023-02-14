@@ -88,6 +88,14 @@ class Api {
       throw error.response.data.msg;
     }
   };
+  getDenuncia = async (id) => {
+    try {
+      const { data } = await this.api.get(`/admin/denuncia/${id}`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
 }
 
 export default new Api();

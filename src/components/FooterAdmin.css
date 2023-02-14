@@ -8,6 +8,7 @@
   top: auto !important;
   bottom: 0 !important;
   padding: 0 !important;
+  z-index: 1;
 }
 .nav2-admin ul {
   list-style-type: none;

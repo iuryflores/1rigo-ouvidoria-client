@@ -5,7 +5,7 @@ import api from "../../utils/api.utils";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
 
-export const AdminHome = ({ loading, setLoading }) => {
+export const Manifestacoes = ({ loading, setLoading }) => {
   const [denuncias, setDenuncias] = useState([]);
 
   useEffect(() => {
@@ -74,6 +74,9 @@ export const AdminHome = ({ loading, setLoading }) => {
   return !loading ? (
     <div className="admin-home">
       <NavbarAdmin />
+      <div className="d-flex flex-column align-items-center">
+        <p> Total de denúncias: {denuncias.length}</p>
+      </div>
       <hr />
       <section className="d-flex  justify-content-center">
         <div className="d-flex container flex-wrap row">
@@ -82,9 +85,8 @@ export const AdminHome = ({ loading, setLoading }) => {
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
-              <i class="bi bi-p-circle number-stat-home"></i>
-              <p className="p">Pendentes</p>
-              <p className="number-stat-home">{totalAssedioMoral}</p>
+              <p className="number-stat">{totalAssedioMoral}</p>
+              <p className="p">Assédio Moral</p>
             </div>
           </Link>
           <Link
@@ -92,9 +94,8 @@ export const AdminHome = ({ loading, setLoading }) => {
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
-              <i class="bi bi-arrow-repeat number-stat-home"></i>
-              <p className="p">Em andamento</p>
-              <p className="number-stat-home">{totalAssedioSexual}</p>
+              <p className="number-stat">{totalAssedioSexual}</p>
+              <p className="p">Assédio Sexual</p>
             </div>
           </Link>
           <Link
@@ -102,9 +103,8 @@ export const AdminHome = ({ loading, setLoading }) => {
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
-              <i class="bi bi-check-circle number-stat-home"></i>
-              <p className="p">Finalizadas procedentes</p>
-              <p className="number-stat-home">{totalGestao}</p>
+              <p className="number-stat">{totalGestao}</p>
+              <p className="p">Gestão inadequada de pessoas</p>
             </div>
           </Link>
           <Link
@@ -112,9 +112,8 @@ export const AdminHome = ({ loading, setLoading }) => {
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
-              <i class="bi bi-x-circle number-stat-home"></i>
-              <p className="p">Finalizadas improcedentes</p>
-              <p className="number-stat-home">{totalDiscriminacao}</p>
+              <p className="number-stat">{totalDiscriminacao}</p>
+              <p className="p">Discriminação</p>
             </div>
           </Link>
           <Link
@@ -122,9 +121,8 @@ export const AdminHome = ({ loading, setLoading }) => {
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
-              <i class="bi bi-folder-x number-stat-home"></i>
-              <p className="p">Dados insuficientes</p>
-              <p className="number-stat-home">{totalFraude}</p>
+              <p className="number-stat">{totalFraude}</p>
+              <p className="p">Fraude</p>
             </div>
           </Link>
           <Link
@@ -132,14 +130,58 @@ export const AdminHome = ({ loading, setLoading }) => {
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
-              <i class="bi bi-box-seam number-stat-home"></i>
-              <p className="p">Total de manifestações recebidas</p>
-              <p className="number-stat-home">{denuncias.length}</p>
+              <p className="number-stat">{totalCorrupcao}</p>
+              <p className="p">Corrupção</p>
+            </div>
+          </Link>
+          <Link
+            to="/admin/complaints/conflito-interesses/"
+            className="col-sm-12 col-md-4 col-lg-4 mt-3"
+          >
+            <div className="card-body">
+              <p className="number-stat">{totalConflito}</p>
+              <p className="p">Conflito de Interesses</p>
+            </div>
+          </Link>
+          <Link
+            to="/admin/complaints/atividades-ilicitas/"
+            className="col-sm-12 col-md-4 col-lg-4 mt-3"
+          >
+            <div className="card-body">
+              <p className="number-stat">{totalAtividadesIlicitas}</p>
+              <p className="p">Atividades Ilícitas</p>
+            </div>
+          </Link>
+          <Link
+            to="/admin/complaints/saude-seguranca-ocupacional/"
+            className="col-sm-12 col-md-4 col-lg-4 mt-3"
+          >
+            <div className="card-body">
+              <p className="number-stat">{totalSaude}</p>
+              <p className="p">Saúde e Segurança Ocupacional</p>
+            </div>
+          </Link>
+          <Link
+            to="/admin/complaints/meio-ambiente/"
+            className="col-sm-12 col-md-4 col-lg-4 mt-3"
+          >
+            <div className="card-body">
+              <p className="number-stat">{totalMeioAmbiente}</p>
+              <p className="p">Meio Ambiente</p>
+            </div>
+          </Link>
+          <Link
+            to="/admin/complaints/riscos-operacionais/"
+            className="col-sm-12 col-md-4 col-lg-4 mt-3"
+          >
+            <div className="card-body">
+              <p className="number-stat">{totalRiscos}</p>
+              <p className="p">Riscos Operacionais</p>
             </div>
           </Link>
         </div>
       </section>
-
+      <hr className="espacamento-200" />
       <FooterAdmin />
     </div>
   ) : (

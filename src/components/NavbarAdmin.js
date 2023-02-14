@@ -20,7 +20,7 @@ export const NavbarAdmin = () => {
             <i className="bi bi-house-door-fill"></i>
             <span>HOME</span>
           </Link>
-          <Link to="/admin/home/" className="link no-mobile">
+          <Link to="/admin/manifestacoes/" className="link no-mobile">
             <i className="bi bi-chat-right-quote-fill"></i>
             <span>MANIFESTAÇÕES</span>
           </Link>

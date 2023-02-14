@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
 import loadingGif from "../../imgs/loading-state.gif";
@@ -111,7 +111,9 @@ export const Categoria = ({ loading, setLoading }) => {
                       </td>
                       <td>{denuncia.status}</td>
                       <td className="text-center">
-                        <i className="bi bi-eye-fill"></i>
+                        <Link to={`/admin/denuncia/${denuncia._id}/`}>
+                          <i className="bi bi-eye-fill"></i>
+                        </Link>
                       </td>
                     </tr>
                   );
