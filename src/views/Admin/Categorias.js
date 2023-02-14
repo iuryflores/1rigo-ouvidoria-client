@@ -13,6 +13,33 @@ export const Categoria = ({ loading, setLoading }) => {
   if (categoria === "assedio-sexual") {
     newCategoria = "Assédio Sexual";
   }
+  if (categoria === "discriminacao") {
+    newCategoria = "Discriminação";
+  }
+  if (categoria === "gestao-inadequada") {
+    newCategoria = "Gestão inadequada de pessoas";
+  }
+  if (categoria === "fraude") {
+    newCategoria = "Fraude";
+  }
+  if (categoria === "corrupcao") {
+    newCategoria = "Corrupção";
+  }
+  if (categoria === "conflito-interesses") {
+    newCategoria = "Conflito de Interesses";
+  }
+  if (categoria === "atividades-ilicitas") {
+    newCategoria = "Atividades Ilícitas";
+  }
+  if (categoria === "saude-seguranca-ocupacional") {
+    newCategoria = "Sáude e Segurança Ocupacional";
+  }
+  if (categoria === "meio-ambiente") {
+    newCategoria = "Meio Ambiente";
+  }
+  if (categoria === "riscos-operacionais") {
+    newCategoria = "Riscos Operacionais";
+  }
   const [denuncias, setDenuncias] = useState([]);
 
   useEffect(() => {
@@ -46,6 +73,7 @@ export const Categoria = ({ loading, setLoading }) => {
               <th scope="col">Setor</th>
               <th scope="col">Categoria</th>
               <th scope="col">Protocolo</th>
+              <th scope="col">Reclamante</th>
               <th scope="col">Status</th>
               <th className="text-center" scope="col">
                 Ações
@@ -57,27 +85,26 @@ export const Categoria = ({ loading, setLoading }) => {
               if (denuncia.category === categoria) {
                 count++;
                 return (
-                  <>
-                    <tr key={index}>
-                      <th scope="row">{count}</th>
-                      <td>
-                        {new Date(
-                          denuncia.createdAt.slice(0, -1)
-                        ).toLocaleDateString("pt-br", {
-                          day: "numeric",
-                          month: "numeric",
-                          year: "numeric",
-                        })}
-                      </td>
-                      <td>{denuncia.sector}</td>
-                      <td>{newCategoria}</td>
-                      <td>{denuncia.protocolo_id}</td>
-                      <td>{denuncia.status}</td>
-                      <td className="text-center">
-                        <i className="bi bi-eye-fill"></i>
-                      </td>
-                    </tr>
-                  </>
+                  <tr key={index}>
+                    <th scope="row">{count}</th>
+                    <td>
+                      {new Date(
+                        denuncia.createdAt.slice(0, -1)
+                      ).toLocaleDateString("pt-br", {
+                        day: "numeric",
+                        month: "numeric",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td>{denuncia.sector}</td>
+                    <td>{newCategoria}</td>
+                    <td>{denuncia.protocolo_id}</td>
+                    <td>{denuncia.name || "Anônimo"}</td>
+                    <td>{denuncia.status}</td>
+                    <td className="text-center">
+                      <i className="bi bi-eye-fill"></i>
+                    </td>
+                  </tr>
                 );
               }
             })}
