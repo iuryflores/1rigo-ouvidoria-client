@@ -96,6 +96,22 @@ class Api {
       throw error.response.data.msg;
     }
   };
+  getAllDenuncias = async () => {
+    try {
+      const { data } = await this.api.get(`/admin/denuncias/`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  getDenunciasByStatus = async (status) => {
+    try {
+      const { data } = await this.api.get(`/admin/denuncias/status/${status}`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
 }
 
 export default new Api();

@@ -13,8 +13,16 @@ import {
   Saude,
   AddForm,
 } from "./views/index";
-
-import { AdminLogin, AdminHome, Categoria , Denuncia,Manifestacoes} from "./views/Admin/index.js";
+import loadingGif from "./imgs/loading-state.gif";
+import {
+  AdminLogin,
+  AdminHome,
+  Categoria,
+  Denuncia,
+  Manifestacoes,
+  AllDenuncias,
+  DenunciaByStatus,
+} from "./views/Admin/index.js";
 
 import { Navbar, Footer } from "./components/index";
 
@@ -37,6 +45,7 @@ function App() {
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
@@ -48,6 +57,7 @@ function App() {
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
@@ -58,6 +68,7 @@ function App() {
           setMessage={setMessage}
           loading={loading}
           setLoading={setLoading}
+          loadingGif={loadingGif}
         />
         <Route
           path="/fraudes"
@@ -66,6 +77,7 @@ function App() {
           setMessage={setMessage}
           loading={loading}
           setLoading={setLoading}
+          loadingGif={loadingGif}
         />
         <Route
           path="/saude-meio-ambiente"
@@ -74,6 +86,7 @@ function App() {
           setMessage={setMessage}
           loading={loading}
           setLoading={setLoading}
+          loadingGif={loadingGif}
         />
         <Route
           path="/add-complaint/:category"
@@ -83,6 +96,7 @@ function App() {
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
@@ -94,6 +108,7 @@ function App() {
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
@@ -105,6 +120,7 @@ function App() {
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
@@ -116,9 +132,11 @@ function App() {
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
+        {/* ADMIN ROUTES */}
         <Route
           path="/admin/login"
           element={
@@ -127,6 +145,7 @@ function App() {
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
@@ -138,45 +157,72 @@ function App() {
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
         <Route
-          path="/admin/manifestacoes"
+          path="/admin/manifestacoes/"
           element={
             <Manifestacoes
               message={message}
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
         <Route
-          path="/admin/complaints/:categoria/"
+          path="/admin/denuncias"
+          element={
+            <AllDenuncias
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
+        <Route
+          path="/admin/denuncias/:categoria"
           element={
             <Categoria
               message={message}
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
-
         <Route
-          path="/admin/denuncia/:id/"
+          path="/admin/denuncia/:id"
           element={
             <Denuncia
               message={message}
               setMessage={setMessage}
               loading={loading}
               setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
+        <Route
+          path="/admin/denuncias/status/:status"
+          element={
+            <DenunciaByStatus
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
             />
           }
         />
       </Routes>
-      <Footer />
+      {newLocation !== "/admin/" && <Footer />}
     </div>
   );
 }

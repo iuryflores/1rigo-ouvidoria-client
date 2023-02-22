@@ -5,7 +5,7 @@ import api from "../../utils/api.utils";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
 
-export const AdminHome = ({ loading, setLoading }) => {
+export const AdminHome = ({ loading, setLoading, loadingGif }) => {
   const [denuncias, setDenuncias] = useState([]);
 
   useEffect(() => {
@@ -23,126 +23,109 @@ export const AdminHome = ({ loading, setLoading }) => {
     getDenuncias();
   }, [loading, setLoading]);
 
-  let totalAssedioMoral = 0;
-  let totalAssedioSexual = 0;
-  let totalGestao = 0;
-  let totalDiscriminacao = 0;
-  let totalFraude = 0;
-  let totalCorrupcao = 0;
-  let totalConflito = 0;
-  let totalAtividadesIlicitas = 0;
-  let totalSaude = 0;
-  let totalMeioAmbiente = 0;
-  let totalRiscos = 0;
+  let totalPendentes = 0;
+  let totalEmAndamento = 0;
+  let totalFinalizadosProcedentes = 0;
+  let totalFinalizadosImprocedentes = 0;
+  let totalDadosInsuficientes = 0;
 
   denuncias?.forEach((denuncia) => {
-    if (denuncia.category === "assedio-moral") {
-      return totalAssedioMoral++;
+    if (denuncia.status === "pendente") {
+      return totalPendentes++;
     }
-    if (denuncia.category === "assedio-sexual") {
-      return totalAssedioSexual++;
+    if (denuncia.status === "em-andamento") {
+      return totalEmAndamento++;
     }
-    if (denuncia.category === "gestao-inadequada") {
-      return totalGestao++;
+    if (denuncia.status === "finalizado-procedente") {
+      return totalFinalizadosProcedentes++;
     }
-    if (denuncia.category === "discriminacao") {
-      return totalDiscriminacao++;
+    if (denuncia.status === "finalizado-improcedentes") {
+      return totalFinalizadosImprocedentes++;
     }
-    if (denuncia.category === "fraude") {
-      return totalFraude++;
-    }
-    if (denuncia.category === "corrupcao") {
-      return totalCorrupcao++;
-    }
-    if (denuncia.category === "conflito-interesses") {
-      return totalConflito++;
-    }
-    if (denuncia.category === "atividades-ilicitas") {
-      return totalAtividadesIlicitas++;
-    }
-    if (denuncia.category === "saude-seguranca-ocupacional") {
-      return totalSaude++;
-    }
-    if (denuncia.category === "meio-ambiente") {
-      return totalMeioAmbiente++;
-    }
-    if (denuncia.category === "riscos-operacionais") {
-      return totalRiscos++;
+    if (denuncia.status === "dados-insuficientes") {
+      return totalDadosInsuficientes++;
     }
   });
 
-  return !loading ? (
+  return (
     <div className="admin-home">
       <NavbarAdmin />
       <hr />
-      <section className="d-flex  justify-content-center">
-        <div className="d-flex container flex-wrap row">
-          <Link
-            to="/admin/complaints/assedio-moral/"
-            className="col-sm-12 col-md-4 col-lg-4 mt-3"
-          >
-            <div className="card-body">
-              <i class="bi bi-p-circle number-stat-home"></i>
-              <p className="p">Pendentes</p>
-              <p className="number-stat-home">{totalAssedioMoral}</p>
-            </div>
-          </Link>
-          <Link
-            to="/admin/complaints/assedio-sexual/"
-            className="col-sm-12 col-md-4 col-lg-4 mt-3"
-          >
-            <div className="card-body">
-              <i class="bi bi-arrow-repeat number-stat-home"></i>
-              <p className="p">Em andamento</p>
-              <p className="number-stat-home">{totalAssedioSexual}</p>
-            </div>
-          </Link>
-          <Link
-            to="/admin/complaints/gestao-inadequada/"
-            className="col-sm-12 col-md-4 col-lg-4 mt-3"
-          >
-            <div className="card-body">
-              <i class="bi bi-check-circle number-stat-home"></i>
-              <p className="p">Finalizadas procedentes</p>
-              <p className="number-stat-home">{totalGestao}</p>
-            </div>
-          </Link>
-          <Link
-            to="/admin/complaints/discriminacao/"
-            className="col-sm-12 col-md-4 col-lg-4 mt-3"
-          >
-            <div className="card-body">
-              <i class="bi bi-x-circle number-stat-home"></i>
-              <p className="p">Finalizadas improcedentes</p>
-              <p className="number-stat-home">{totalDiscriminacao}</p>
-            </div>
-          </Link>
-          <Link
-            to="/admin/complaints/fraude/"
-            className="col-sm-12 col-md-4 col-lg-4 mt-3"
-          >
-            <div className="card-body">
-              <i class="bi bi-folder-x number-stat-home"></i>
-              <p className="p">Dados insuficientes</p>
-              <p className="number-stat-home">{totalFraude}</p>
-            </div>
-          </Link>
-          <Link
-            to="/admin/complaints/corrupcao/"
-            className="col-sm-12 col-md-4 col-lg-4 mt-3"
-          >
-            <div className="card-body">
-              <i class="bi bi-box-seam number-stat-home"></i>
-              <p className="p">Total de manifestações recebidas</p>
-              <p className="number-stat-home">{denuncias.length}</p>
-            </div>
-          </Link>
+      {!loading ? (
+        <section className="d-flex  justify-content-center">
+          <div className="d-flex container flex-wrap row">
+            <Link
+              to="/admin/denuncias/status/pendente"
+              className="col-sm-12 col-md-4 col-lg-4 mt-3"
+            >
+              <div className="card-body">
+                <i className="bi bi-p-circle number-stat-home"></i>
+                <p className="p">Pendentes</p>
+                <p className="number-stat-home">{totalPendentes}</p>
+              </div>
+            </Link>
+            <Link
+              to="/admin/denuncias/status/em-andamento/"
+              className="col-sm-12 col-md-4 col-lg-4 mt-3"
+            >
+              <div className="card-body">
+                <i className="bi bi-arrow-repeat number-stat-home"></i>
+                <p className="p">Em andamento</p>
+                <p className="number-stat-home">{totalEmAndamento}</p>
+              </div>
+            </Link>
+            <Link
+              to="/admin/denuncias/status/finalizada-procedente/"
+              className="col-sm-12 col-md-4 col-lg-4 mt-3"
+            >
+              <div className="card-body">
+                <i className="bi bi-check-circle number-stat-home"></i>
+                <p className="p">Finalizadas procedentes</p>
+                <p className="number-stat-home">
+                  {totalFinalizadosProcedentes}
+                </p>
+              </div>
+            </Link>
+            <Link
+              to="/admin/denuncias/status/finalizada-improcedente/"
+              className="col-sm-12 col-md-4 col-lg-4 mt-3"
+            >
+              <div className="card-body">
+                <i className="bi bi-x-circle number-stat-home"></i>
+                <p className="p">Finalizadas improcedentes</p>
+                <p className="number-stat-home">
+                  {totalFinalizadosImprocedentes}
+                </p>
+              </div>
+            </Link>
+            <Link
+              to="/admin/denuncias/status/dados-insuficientes/"
+              className="col-sm-12 col-md-4 col-lg-4 mt-3"
+            >
+              <div className="card-body">
+                <i className="bi bi-folder-x number-stat-home"></i>
+                <p className="p">Dados insuficientes</p>
+                <p className="number-stat-home">{totalDadosInsuficientes}</p>
+              </div>
+            </Link>
+            <Link
+              to="/admin/denuncias/"
+              className="col-sm-12 col-md-4 col-lg-4 mt-3"
+            >
+              <div className="card-body">
+                <i className="bi bi-box-seam number-stat-home"></i>
+                <p className="p">Total de manifestações recebidas</p>
+                <p className="number-stat-home">{denuncias.length}</p>
+              </div>
+            </Link>
+          </div>
+        </section>
+      ) : (
+        <div className="d-flex justify-content-center">
+          <img style={{ width: "100px" }} src={loadingGif} alt="Loading gif" />
         </div>
-      </section>
-
+      )}
       <FooterAdmin />
     </div>
-  ) : (
-    <>Loading...</>
   );
 };

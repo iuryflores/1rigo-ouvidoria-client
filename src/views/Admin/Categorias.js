@@ -3,10 +3,9 @@ import api from "../../utils/api.utils";
 import { Link, useParams } from "react-router-dom";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
-import loadingGif from "../../imgs/loading-state.gif";
 
 import "../css/AdminHome.css";
-export const Categoria = ({ loading, setLoading }) => {
+export const Categoria = ({ loading, setLoading, loadingGif }) => {
   const { categoria } = useParams();
   let newCategoria = categoria;
   if (categoria === "assedio-moral") {
@@ -67,16 +66,16 @@ export const Categoria = ({ loading, setLoading }) => {
       </div>
       <hr />
       <div className="container">
-        <table className="table table-striped table-hover">
+        <table className="table table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Data</th>
+              <th scope="col">Protocolo</th>
               <th scope="col">Setor</th>
               <th scope="col" className="no-mobile">
                 Categoria
               </th>
-              <th scope="col">Protocolo</th>
               <th scope="col" className="no-mobile">
                 Reclamante
               </th>
@@ -103,9 +102,9 @@ export const Categoria = ({ loading, setLoading }) => {
                           year: "numeric",
                         })}
                       </td>
+                      <td>{denuncia.protocolo_id}</td>
                       <td>{denuncia.sector}</td>
                       <td className="no-mobile">{newCategoria}</td>
-                      <td>{denuncia.protocolo_id}</td>
                       <td className="no-mobile">
                         {denuncia.name || "Anônimo"}
                       </td>

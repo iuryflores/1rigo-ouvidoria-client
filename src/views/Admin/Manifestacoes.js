@@ -81,7 +81,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
       <section className="d-flex  justify-content-center">
         <div className="d-flex container flex-wrap row">
           <Link
-            to="/admin/complaints/assedio-moral/"
+            to="/admin/denuncias/assedio-moral/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -90,7 +90,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/assedio-sexual/"
+            to="/admin/denuncias/assedio-sexual/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -99,7 +99,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/gestao-inadequada/"
+            to="/admin/denuncias/gestao-inadequada/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -108,7 +108,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/discriminacao/"
+            to="/admin/denuncias/discriminacao/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -117,7 +117,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/fraude/"
+            to="/admin/denuncias/fraude/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -126,7 +126,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/corrupcao/"
+            to="/admin/denuncias/corrupcao/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -135,7 +135,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/conflito-interesses/"
+            to="/admin/denuncias/conflito-interesses/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -144,7 +144,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/atividades-ilicitas/"
+            to="/admin/denuncias/atividades-ilicitas/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -153,7 +153,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/saude-seguranca-ocupacional/"
+            to="/admin/denuncias/saude-seguranca-ocupacional/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -162,7 +162,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/meio-ambiente/"
+            to="/admin/denuncias/meio-ambiente/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">
@@ -171,7 +171,7 @@ export const Manifestacoes = ({ loading, setLoading }) => {
             </div>
           </Link>
           <Link
-            to="/admin/complaints/riscos-operacionais/"
+            to="/admin/denuncias/riscos-operacionais/"
             className="col-sm-12 col-md-4 col-lg-4 mt-3"
           >
             <div className="card-body">

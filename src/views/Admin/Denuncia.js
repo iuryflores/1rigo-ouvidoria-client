@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
 import loadingGif from "../../imgs/loading-state.gif";
@@ -25,74 +25,101 @@ export const Denuncia = ({ loading, setLoading }) => {
     };
     getDenuncia();
   }, [loading, setLoading, id]);
-  
+
   return (
     <div>
       <NavbarAdmin />
-      <div className="container">
-        <h4>Denúncias</h4>
-      </div>
-      <hr />
-      <div className="container">
-        <table className="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Data</th>
-              <th scope="col">Setor</th>
-              <th scope="col" className="no-mobile">
-                Categoria
-              </th>
-              <th scope="col">Protocolo</th>
-              <th scope="col" className="no-mobile">
-                Reclamante
-              </th>
-              <th scope="col">Status</th>
-              <th className="text-center" scope="col">
-                Ações
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {!loading ? (
-              denuncia?.map((denuncia, index) => {
-                return (
-                  <tr key={index}>
-                    <th scope="row"></th>
-                    <td>
-                      {new Date(
-                        denuncia.createdAt.slice(0, -1)
-                      ).toLocaleDateString("pt-br", {
-                        day: "numeric",
-                        month: "numeric",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td>{denuncia.sector}</td>
-                    <td className="no-mobile">{denuncia.name}</td>
-                    <td>{denuncia.protocolo_id}</td>
-                    <td className="no-mobile">{denuncia.name || "Anônimo"}</td>
-                    <td>{denuncia.status}</td>
-                    <td className="text-center">
-                      <i className="bi bi-eye-fill"></i>
-                    </td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="8" className="text-center">
-                  <img
-                    style={{ width: "100px" }}
-                    src={loadingGif}
-                    alt="Loading gif"
-                  />
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      {!loading ? (
+        denuncia?.map((denuncia, index) => {
+          return (
+            <div key={index}>
+              <div className="container">
+                <h4>
+                  Visualização da denúncia de protocolo nº{" "}
+                  {denuncia.protocolo_id}
+                </h4>
+              </div>
+              <hr />
+              <div className="container w-50">
+                <div class="card">
+                  <h5 class="card-header">Dados da denúncia</h5>
+                  <div class="card-body">
+                    <table className="table ">
+                      <tr>
+                        <td> Data da denúncia:</td>
+                        <td>
+                          <b>
+                            {new Date(
+                              denuncia.createdAt.slice(0, -1)
+                            ).toLocaleDateString("pt-br", {
+                              day: "numeric",
+                              month: "numeric",
+                              year: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                            h
+                          </b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Setor:</td>
+                        <td>
+                          <b>{denuncia.sector}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Categoria:</td>
+                        <td>
+                          <b>{denuncia.category}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Envolvidos:</td>
+                        <td>
+                          <b>{denuncia.envolved}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Testemunhas:</td>
+                        <td>
+                          <b>{denuncia.witness}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Conversou sobre o ocorrido com:</td>
+                        <td>
+                          <b>{denuncia.talkedAbout}</b>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Detalhes:</td>
+                        <td>
+                          <b>{denuncia.details}</b>
+                        </td>
+                      </tr>
+                    </table>
+                    <p class="card-text"> </p>
+                    <p class="card-text"></p>
+                    <Link to="#" class="btn btn-primary">
+                      Go somewhere
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {denuncia.name}
+              {denuncia.protocolo_id}
+              {denuncia.name || "Anônimo"}
+              {denuncia.status}
+              <i className="bi bi-eye-fill"></i>
+            </div>
+          );
+        })
+      ) : (
+        <img style={{ width: "100px" }} src={loadingGif} alt="Loading gif" />
+      )}
+
       <FooterAdmin />
     </div>
   );
