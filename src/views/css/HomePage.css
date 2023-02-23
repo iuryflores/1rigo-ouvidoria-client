@@ -30,6 +30,9 @@
   font-size: 0.8rem;
   color: grey;
 }
+.card td {
+  padding: 0 !important;
+}
 @media (max-width: 900px) {
   .wrap-site {
     width: 100% !important;
@@ -38,5 +41,11 @@
   }
   .wrap-site a {
     margin-top: 15px;
+  }
+  .align-mobile {
+    flex-direction: column !important;
+  }
+  .align-mobile .card {
+    width: auto !important;
   }
 }
