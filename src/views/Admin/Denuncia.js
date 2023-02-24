@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
 import loadingGif from "../../imgs/loading-state.gif";
+import { Button, Modal } from "react-bootstrap";
 
 import "../css/AdminHome.css";
+
 export const Denuncia = ({ loading, setLoading }) => {
   const { id } = useParams();
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleAssumir = () =>{
+    setShow(false)
+  }
   const [denuncia, setDenuncia] = useState();
 
   useEffect(() => {
@@ -56,9 +65,9 @@ export const Denuncia = ({ loading, setLoading }) => {
               </div>
               <hr />
               <div className="d-flex w-100 justify-content-end  px-3">
-                <Link to="#" className="btn btn-info mx-3">
+                <Button className="mx-3" variant="primary" onClick={handleShow}>
                   Assumir
-                </Link>
+                </Button>
                 <span className={`btn btn-${status}`}>{denuncia.status}</span>
               </div>
               <div className="align-mobile d-flex flex-nowrap">
@@ -161,7 +170,52 @@ export const Denuncia = ({ loading, setLoading }) => {
                   </div>
                 </div>
               </div>
-              <div className="d-flex w-100 justify-content-center"></div>
+              {/* Modal */}
+              <Modal
+                style={{ marginTop: "20%" }}
+                show={show}
+                onHide={handleClose}
+              >
+                <Modal.Header closeButton>
+                  <h6>Deseja assumir o controle desta denúncia?</h6>
+                </Modal.Header>
+                <Modal.Body>
+                  <p className="d-flex flex-column">
+                    <span>
+                      Protocolo n. <b> {denuncia.protocolo_id}</b>
+                    </span>
+                    <span>
+                      Data da denúncia:{" "}
+                      <b>
+                        {new Date(
+                          denuncia.createdAt.slice(0, -1)
+                        ).toLocaleDateString("pt-br", {
+                          day: "numeric",
+                          month: "numeric",
+                          year: "numeric",
+                        })}
+                      </b>
+                    </span>
+                    <span>
+                      Denúncia de <b> {denuncia.category}</b>
+                    </span>
+                    <span>
+                      Reclamante: <b> {denuncia.name || "Anônimo"}</b>
+                    </span>
+                    <span>
+                      Setor denunciado: <b> {denuncia.sector}</b>
+                    </span>
+                  </p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="primary" onClick={handleAssumir}>
+                    Sim
+                  </Button>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Não
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </div>
           );
         })
