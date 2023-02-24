@@ -10,7 +10,7 @@ class Api {
         const token = localStorage.getItem("token");
         if (token) {
           config.headers = {
-            Autorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           };
         }
         return config;
