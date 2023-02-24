@@ -33,6 +33,13 @@
 .card td {
   padding: 0 !important;
 }
+.align-mobile .card-body {
+  box-shadow: none !important;
+}
+.align-mobile .card-body:hover {
+  cursor: auto !important;
+  background-color: inherit !important;
+}
 @media (max-width: 900px) {
   .wrap-site {
     width: 100% !important;

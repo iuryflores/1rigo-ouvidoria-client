@@ -55,13 +55,16 @@ export const Denuncia = ({ loading, setLoading }) => {
                 </h4>
               </div>
               <hr />
+              <div className="d-flex w-100 justify-content-end  px-3">
+                <Link to="#" className="btn btn-info mx-3">
+                  Assumir
+                </Link>
+                <span className={`btn btn-${status}`}>{denuncia.status}</span>
+              </div>
               <div className="align-mobile d-flex flex-nowrap">
                 <div className="card w-50 m-3">
-                  <div className="d-flex card-header justify-content-between">
-                    <h5>Dados da denúncia</h5>
-                    <span className={`btn btn-${status}`}>
-                      {denuncia.status}
-                    </span>
+                  <div className="d-flex card-header justify-content-between align-items-center">
+                    <h5 className=" mb-0">Dados da denúncia</h5>
                   </div>
                   <div className="card-body">
                     <table className="table table-borderless">
@@ -158,11 +161,7 @@ export const Denuncia = ({ loading, setLoading }) => {
                   </div>
                 </div>
               </div>
-              <div className="d-flex w-100 justify-content-center">
-                <Link to="#" className="btn btn-info">
-                  Assumir
-                </Link>
-              </div>
+              <div className="d-flex w-100 justify-content-center"></div>
             </div>
           );
         })
