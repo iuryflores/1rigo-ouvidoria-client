@@ -11,7 +11,7 @@ import {
   Relationship,
   Fraudes,
   Saude,
-  AddForm,
+  AddForm
 } from "./views/index";
 import loadingGif from "./imgs/loading-state.gif";
 import {
@@ -21,7 +21,7 @@ import {
   Denuncia,
   Manifestacoes,
   AllDenuncias,
-  DenunciaByStatus,
+  DenunciaByStatus
 } from "./views/Admin/index.js";
 
 import { Navbar, Footer } from "./components/index";
@@ -47,6 +47,12 @@ function App() {
               setLoading={setLoading}
               loadingGif={loadingGif}
             />
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <p>Nao encontrado</p>
           }
         />
         <Route

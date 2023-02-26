@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
 import { useParams } from "react-router-dom";
-import { NavbarAdmin } from "../../components/NavbarAdmin";
-import { FooterAdmin } from "../../components/FooterAdmin";
+import { NavbarAdmin, FooterAdmin, MsgSucess } from "../../components/index.js";
+
 import loadingGif from "../../imgs/loading-state.gif";
 import { Button, Modal } from "react-bootstrap";
 
 import "../css/AdminHome.css";
 
-export const Denuncia = ({ loading, setLoading }) => {
+export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
   const { id } = useParams();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleAssumir = () =>{
-    setShow(false)
-  }
   const [denuncia, setDenuncia] = useState();
+
+  const [assumir, setAssumir] = useState();
+
+  let userId = sessionStorage.getItem("userId");
+  let status;
 
   useEffect(() => {
     const getDenuncia = async () => {
@@ -33,12 +35,43 @@ export const Denuncia = ({ loading, setLoading }) => {
       }
     };
     getDenuncia();
-  }, [loading, setLoading, id]);
-  let status;
 
+    const getAuditById = async () => {
+      try {
+        const data = await api.getAuditById(id);
+        if (data[0].responsible_id !== undefined) setAssumir(false);
+      } catch (error) {
+        console.log(error, "Error to get Audit");
+      }
+    };
+    getAuditById();
+  }, [loading, setLoading, id, userId]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+  }, [message, setMessage]);
+
+  const handleAssumir = async (e) => {
+    e.preventDefault();
+
+    const userId = sessionStorage.getItem("userId");
+
+    try {
+      const newAudit = await api.addAudit(id, userId);
+      setShow(false);
+      setMessage("Criado com sucesso!");
+      return newAudit;
+    } catch (error) {
+      console.log(error);
+      setMessage(error);
+    }
+  };
   return (
     <div>
       <NavbarAdmin />
+      {message && <MsgSucess>{message}</MsgSucess>}
       {!loading ? (
         denuncia?.map((denuncia, index) => {
           const now = new Date(); // Data de hoje
@@ -64,10 +97,17 @@ export const Denuncia = ({ loading, setLoading }) => {
                 </h4>
               </div>
               <hr />
+
               <div className="d-flex w-100 justify-content-end  px-3">
-                <Button className="mx-3" variant="primary" onClick={handleShow}>
-                  Assumir
-                </Button>
+                {assumir === undefined && (
+                  <Button
+                    className="mx-3"
+                    variant="primary"
+                    onClick={handleShow}
+                  >
+                    Assumir
+                  </Button>
+                )}
                 <span className={`btn btn-${status}`}>{denuncia.status}</span>
               </div>
               <div className="align-mobile d-flex flex-nowrap">
@@ -89,7 +129,7 @@ export const Denuncia = ({ loading, setLoading }) => {
                                 month: "numeric",
                                 year: "numeric",
                                 hour: "2-digit",
-                                minute: "2-digit",
+                                minute: "2-digit"
                               })}
                               h
                             </b>
@@ -110,7 +150,7 @@ export const Denuncia = ({ loading, setLoading }) => {
                         <tr>
                           <td>Envolvidos:</td>
                           <td>
-                            <b>{denuncia.envolved}</b>
+                            <b>{denuncia.involved}</b>
                           </td>
                         </tr>
                         <tr>
@@ -170,51 +210,95 @@ export const Denuncia = ({ loading, setLoading }) => {
                   </div>
                 </div>
               </div>
+              <div className="d-flex">
+                <div className="card w-100 m-3">
+                  <div className="d-flex card-header justify-content-between align-items-center">
+                    <h5 className=" mb-0 w-100 text-center">Auditoria</h5>
+                  </div>
+                  <div className="card-body">
+                    <table className="table table-borderless">
+                      <thead>
+                        <tr>
+                          <th>DATA</th>
+                          <th>OPERAÇÃO</th>
+                          <th>DESCRIÇÃO</th>
+                          <th>USUÁRIO</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {denuncia.audits.map((audit, index) => {
+                          return (
+                            <tr key={index}>
+                              <td>
+                                {new Date(
+                                  audit.createdAt.slice(0, -1)
+                                ).toLocaleDateString("pt-br", {
+                                  day: "numeric",
+                                  month: "numeric",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit"
+                                })}
+                                h
+                              </td>
+                              <td>{audit.operacao}</td>
+                              <td>{audit.descricao}</td>
+                              <td>{audit.userName}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
               {/* Modal */}
               <Modal
                 style={{ marginTop: "20%" }}
                 show={show}
                 onHide={handleClose}
               >
-                <Modal.Header closeButton>
-                  <h6>Deseja assumir o controle desta denúncia?</h6>
-                </Modal.Header>
-                <Modal.Body>
-                  <p className="d-flex flex-column">
-                    <span>
-                      Protocolo n. <b> {denuncia.protocolo_id}</b>
-                    </span>
-                    <span>
-                      Data da denúncia:{" "}
-                      <b>
-                        {new Date(
-                          denuncia.createdAt.slice(0, -1)
-                        ).toLocaleDateString("pt-br", {
-                          day: "numeric",
-                          month: "numeric",
-                          year: "numeric",
-                        })}
-                      </b>
-                    </span>
-                    <span>
-                      Denúncia de <b> {denuncia.category}</b>
-                    </span>
-                    <span>
-                      Reclamante: <b> {denuncia.name || "Anônimo"}</b>
-                    </span>
-                    <span>
-                      Setor denunciado: <b> {denuncia.sector}</b>
-                    </span>
-                  </p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="primary" onClick={handleAssumir}>
-                    Sim
-                  </Button>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Não
-                  </Button>
-                </Modal.Footer>
+                <form onSubmit={handleAssumir}>
+                  <Modal.Header closeButton>
+                    <h6>Deseja assumir o controle desta denúncia?</h6>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p className="d-flex flex-column">
+                      <span>
+                        Protocolo n. <b> {denuncia.protocolo_id}</b>
+                      </span>
+                      <span>
+                        Data da denúncia:{" "}
+                        <b>
+                          {new Date(
+                            denuncia.createdAt.slice(0, -1)
+                          ).toLocaleDateString("pt-br", {
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric"
+                          })}
+                        </b>
+                      </span>
+                      <span>
+                        Denúncia de <b> {denuncia.category}</b>
+                      </span>
+                      <span>
+                        Reclamante: <b> {denuncia.name || "Anônimo"}</b>
+                      </span>
+                      <span>
+                        Setor denunciado: <b> {denuncia.sector}</b>
+                      </span>
+                    </p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <button className="btn btn-primary" type="submit">
+                      Sim
+                    </button>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Não
+                    </Button>
+                  </Modal.Footer>
+                </form>
               </Modal>
             </div>
           );

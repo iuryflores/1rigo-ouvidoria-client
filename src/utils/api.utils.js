@@ -3,14 +3,14 @@ import axios from "axios";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: "http://localhost:5000/",
+      baseURL: "http://localhost:5000/"
     });
     this.api.interceptors.request.use(
       (config) => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (token) {
           config.headers = {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           };
         }
         return config;
@@ -23,7 +23,7 @@ class Api {
       (response) => response,
       (error) => {
         if (error.response.status === 401) {
-          localStorage.removeItem("token");
+          sessionStorage.removeItem("token");
           window.location = "/admin/login";
         }
         throw error;
@@ -33,14 +33,15 @@ class Api {
   login = async (loginInfo) => {
     try {
       const { data } = await this.api.post("/user/auth/login", loginInfo);
-      localStorage.setItem("token", data.token);
+      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem("userId", data.id);
     } catch (error) {
       throw error.response.data.msg;
     }
   };
   signup = async (signupInfo) => {
     try {
-      const { data } = await this.api.post("/user/auth/login", signupInfo);
+      const { data } = await this.api.post("/user/auth/signup", signupInfo);
       return data;
     } catch (error) {
       throw error.response.data.msg;
@@ -53,7 +54,7 @@ class Api {
         `/add-complaint/${category}`,
         complaintData
       );
-      console.log(data);
+      console.log({ data });
       return data;
     } catch (error) {
       throw error.response.data.msg;
@@ -74,6 +75,26 @@ class Api {
     try {
       const { data } = await this.api.get(
         `/track-complaint/${protocolo_id}/${pass_protocolo}`
+      );
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  /*ADMIN FUNCTIONS*/
+  getAuditById = async (complaintId) => {
+    try {
+      const { data } = await this.api.get(`/admin/denuncia/${complaintId}`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  addAudit = async (denunciaId, userId) => {
+    try {
+      const { data } = await this.api.post(
+        `/admin/denuncia/${denunciaId}`,
+        userId
       );
       return data;
     } catch (error) {
