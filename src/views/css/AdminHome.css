@@ -10,3 +10,9 @@
   font-size: 3rem;
   color: #004483;
 }
+.auditoria {
+  font-size: 0.8rem;
+}
+.auditoria th {
+  padding: 0 !important;
+}

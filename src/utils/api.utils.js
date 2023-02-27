@@ -3,14 +3,14 @@ import axios from "axios";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: "http://localhost:5000/"
+      baseURL: "http://localhost:5000/",
     });
     this.api.interceptors.request.use(
       (config) => {
         const token = sessionStorage.getItem("token");
         if (token) {
           config.headers = {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           };
         }
         return config;
@@ -95,6 +95,17 @@ class Api {
       const { data } = await this.api.post(
         `/admin/denuncia/${denunciaId}`,
         userId
+      );
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  endAudit = async (denunciaId, userId, tipo) => {
+    try {
+      const { data } = await this.api.patch(
+        `/admin/denuncia/${denunciaId}`,
+        tipo, userId
       );
       return data;
     } catch (error) {

@@ -11,7 +11,7 @@ export const Footer = () => {
       <hr className="espacamento-100" />
       <footer className="d-flex flex-wrap justify-content-around align-items-center  border-top no-mobile">
         <p className=" mb-0">
-          © 2022 Canal de Denúncias - 1RIGO | Desenvolvido por{" "}
+          © 2022 - 2023 Canal de Denúncias - 1RIGO | Desenvolvido por{" "}
           <a href="https://iuryflores.com.br" target="blank">
             Iury Flores
           </a>

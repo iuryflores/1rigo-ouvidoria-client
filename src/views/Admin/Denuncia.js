@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { NavbarAdmin, FooterAdmin, MsgSucess } from "../../components/index.js";
+import { ButtonFinalizar } from "../../components/ButtonFinalizar";
 
 import loadingGif from "../../imgs/loading-state.gif";
 import { Button, Modal } from "react-bootstrap";
@@ -12,12 +13,17 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
   const { id } = useParams();
   const [show, setShow] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleClose = () => setShow(false);
+  const handleCloseFinalizar = () => setFinalizar(false);
   const handleShow = () => setShow(true);
+  const handleShowFinalizar = () => setFinalizar(true);
 
   const [denuncia, setDenuncia] = useState();
 
   const [assumir, setAssumir] = useState();
+  const [finalizar, setFinalizar] = useState();
 
   let userId = sessionStorage.getItem("userId");
   let status;
@@ -54,14 +60,26 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
   }, [message, setMessage]);
 
   const handleAssumir = async (e) => {
-    e.preventDefault();
-
     const userId = sessionStorage.getItem("userId");
 
     try {
       const newAudit = await api.addAudit(id, userId);
-      setShow(false);
-      setMessage("Criado com sucesso!");
+      navigate(`/admin/denuncia/${id}`);
+
+      return newAudit;
+    } catch (error) {
+      console.log(error);
+      setMessage(error);
+    }
+  };
+  const handleFinalizar = async (e) => {
+    const userId = sessionStorage.getItem("userId");
+
+    const tipo = e.target.innerText;
+
+    try {
+      const newAudit = await api.endAudit(id, userId, { tipo });
+      navigate(`/admin/denuncia/${id}`);
       return newAudit;
     } catch (error) {
       console.log(error);
@@ -79,36 +97,50 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
           const diff = Math.abs(now.getTime() - past.getTime()); // Subtrai uma data pela outra
           const days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
 
-          if (denuncia.status)
-            if (denuncia.status === "pendente") {
-              status = "warning";
-            }
-          if (days >= 7) {
+          if (denuncia.status === "pendente") status = "warning";
+          if (denuncia.status === "finalizado") status = "secondary";
+          if (denuncia.status === "em-andamento") status = "info";
+
+          if (days >= 7 && denuncia.status !== "finalizado") {
             status = "danger";
             denuncia.status = `Pendente à ${days} dias`;
           }
 
           return (
             <div key={index}>
-              <div className="container">
+              <div className="mx-3">
                 <h4>
-                  Visualização da denúncia de protocolo nº{" "}
-                  {denuncia.protocolo_id}
+                  <i className="bi bi-megaphone-fill"></i> Visualização da
+                  denúncia de protocolo nº {denuncia.protocolo_id}
                 </h4>
               </div>
               <hr />
 
               <div className="d-flex w-100 justify-content-end  px-3">
-                {assumir === undefined && (
-                  <Button
-                    className="mx-3"
-                    variant="primary"
-                    onClick={handleShow}
-                  >
-                    Assumir
-                  </Button>
+                {denuncia.status.slice(0, 10) !== "finalizado" ? (
+                  assumir === undefined ? (
+                    <Button
+                      className="mx-3"
+                      variant="primary"
+                      onClick={handleShow}
+                    >
+                      Assumir
+                    </Button>
+                  ) : (
+                    <Button
+                      className="mx-3"
+                      variant="primary"
+                      onClick={handleShowFinalizar}
+                    >
+                      Finalizar
+                    </Button>
+                  )
+                ) : (
+                  <></>
                 )}
-                <span className={`btn btn-${status}`}>{denuncia.status}</span>
+                <span className={`btn btn-${status}`}>
+                  {denuncia.status.toUpperCase()}
+                </span>
               </div>
               <div className="align-mobile d-flex flex-nowrap">
                 <div className="card w-50 m-3">
@@ -129,7 +161,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                                 month: "numeric",
                                 year: "numeric",
                                 hour: "2-digit",
-                                minute: "2-digit"
+                                minute: "2-digit",
                               })}
                               h
                             </b>
@@ -210,7 +242,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                   </div>
                 </div>
               </div>
-              <div className="d-flex">
+              <div className="align-mobile auditoria d-flex">
                 <div className="card w-100 m-3">
                   <div className="d-flex card-header justify-content-between align-items-center">
                     <h5 className=" mb-0 w-100 text-center">Auditoria</h5>
@@ -220,7 +252,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                       <thead>
                         <tr>
                           <th>DATA</th>
-                          <th>OPERAÇÃO</th>
+                          <th className="no-mobile">OPERAÇÃO</th>
                           <th>DESCRIÇÃO</th>
                           <th>USUÁRIO</th>
                         </tr>
@@ -237,11 +269,11 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                                   month: "numeric",
                                   year: "numeric",
                                   hour: "2-digit",
-                                  minute: "2-digit"
+                                  minute: "2-digit",
+                                  second: "2-digit",
                                 })}
-                                h
                               </td>
-                              <td>{audit.operacao}</td>
+                              <td className="no-mobile">{audit.operacao}</td>
                               <td>{audit.descricao}</td>
                               <td>{audit.userName}</td>
                             </tr>
@@ -275,7 +307,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                           ).toLocaleDateString("pt-br", {
                             day: "numeric",
                             month: "numeric",
-                            year: "numeric"
+                            year: "numeric",
                           })}
                         </b>
                       </span>
@@ -300,6 +332,65 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                   </Modal.Footer>
                 </form>
               </Modal>
+              <Modal
+                style={{ marginTop: "20%" }}
+                show={finalizar}
+                onHide={handleCloseFinalizar}
+                aria-labelledby="example-modal-sizes-title-lg"
+                size="lg"
+              >
+                <form onSubmit={handleFinalizar}>
+                  <Modal.Header closeButton>
+                    <h6>Deseja finalizar esta denúncia?</h6>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p className="d-flex flex-column">
+                      <span>
+                        Protocolo n. <b> {denuncia.protocolo_id}</b>
+                      </span>
+                      <span>
+                        Data da denúncia:{" "}
+                        <b>
+                          {new Date(
+                            denuncia.createdAt.slice(0, -1)
+                          ).toLocaleDateString("pt-br", {
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric",
+                          })}
+                        </b>
+                      </span>
+                      <span>
+                        Denúncia de <b> {denuncia.category}</b>
+                      </span>
+                      <span>
+                        Reclamante: <b> {denuncia.name || "Anônimo"}</b>
+                      </span>
+                      <span>
+                        Setor denunciado: <b> {denuncia.sector}</b>
+                      </span>
+                    </p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <ButtonFinalizar
+                      tipo="Procedente"
+                      handleFinalizar={handleFinalizar}
+                    />
+                    <ButtonFinalizar
+                      tipo="Improcedente"
+                      handleFinalizar={handleFinalizar}
+                    />
+                    <ButtonFinalizar
+                      
+                      tipo="Dados Insuficientes"
+                      handleFinalizar={handleFinalizar}
+                    />
+                    <Button variant="secondary" onClick={handleCloseFinalizar}>
+                      Não Finalizar
+                    </Button>
+                  </Modal.Footer>
+                </form>
+              </Modal>
             </div>
           );
         })
@@ -308,7 +399,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
           <img style={{ width: "100px" }} src={loadingGif} alt="Loading gif" />
         </div>
       )}
-
+      <hr className="espacamento-100" />
       <FooterAdmin />
     </div>
   );
