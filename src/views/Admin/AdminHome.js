@@ -39,10 +39,10 @@ export const AdminHome = ({ loading, setLoading, loadingGif }) => {
     if (denuncia.status === "finalizado-procedente") {
       return totalFinalizadosProcedentes++;
     }
-    if (denuncia.status === "finalizado-improcedentes") {
+    if (denuncia.status === "finalizado-improcedente") {
       return totalFinalizadosImprocedentes++;
     }
-    if (denuncia.status === "dados-insuficientes") {
+    if (denuncia.status === "finalizado-dados-insuficientes") {
       return totalDadosInsuficientes++;
     }
   });

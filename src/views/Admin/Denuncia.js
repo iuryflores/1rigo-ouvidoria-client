@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { NavbarAdmin, FooterAdmin, MsgSucess } from "../../components/index.js";
-import { ButtonFinalizar } from "../../components/ButtonFinalizar";
 
 import loadingGif from "../../imgs/loading-state.gif";
 import { Button, Modal } from "react-bootstrap";
@@ -76,16 +75,18 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
     const userId = sessionStorage.getItem("userId");
 
     const tipo = e.target.innerText;
-
+    console.log(tipo);
     try {
       const newAudit = await api.endAudit(id, userId, { tipo });
-      navigate(`/admin/denuncia/${id}`);
-      return newAudit;
+      if (newAudit) {
+        window.location.reload();
+      }
     } catch (error) {
       console.log(error);
       setMessage(error);
     }
   };
+
   return (
     <div>
       <NavbarAdmin />
@@ -98,10 +99,10 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
           const days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
 
           if (denuncia.status === "pendente") status = "warning";
-          if (denuncia.status === "finalizado") status = "secondary";
           if (denuncia.status === "em-andamento") status = "info";
-
-          if (days >= 7 && denuncia.status !== "finalizado") {
+          if (denuncia.status.slice(0, 10) === "finalizado")
+            status = "secondary";
+          if (days >= 7 && denuncia.status.slice(0, 10) !== "finalizado") {
             status = "danger";
             denuncia.status = `Pendente à ${days} dias`;
           }
@@ -139,7 +140,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                   <></>
                 )}
                 <span className={`btn btn-${status}`}>
-                  {denuncia.status.toUpperCase()}
+                  {denuncia.status.toUpperCase().replaceAll("-", " ")}
                 </span>
               </div>
               <div className="align-mobile d-flex flex-nowrap">
@@ -161,7 +162,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                                 month: "numeric",
                                 year: "numeric",
                                 hour: "2-digit",
-                                minute: "2-digit",
+                                minute: "2-digit"
                               })}
                               h
                             </b>
@@ -270,7 +271,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                                   year: "numeric",
                                   hour: "2-digit",
                                   minute: "2-digit",
-                                  second: "2-digit",
+                                  second: "2-digit"
                                 })}
                               </td>
                               <td className="no-mobile">{audit.operacao}</td>
@@ -307,7 +308,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                           ).toLocaleDateString("pt-br", {
                             day: "numeric",
                             month: "numeric",
-                            year: "numeric",
+                            year: "numeric"
                           })}
                         </b>
                       </span>
@@ -339,57 +340,72 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                 aria-labelledby="example-modal-sizes-title-lg"
                 size="lg"
               >
-                <form onSubmit={handleFinalizar}>
-                  <Modal.Header closeButton>
-                    <h6>Deseja finalizar esta denúncia?</h6>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p className="d-flex flex-column">
-                      <span>
-                        Protocolo n. <b> {denuncia.protocolo_id}</b>
-                      </span>
-                      <span>
-                        Data da denúncia:{" "}
-                        <b>
-                          {new Date(
-                            denuncia.createdAt.slice(0, -1)
-                          ).toLocaleDateString("pt-br", {
-                            day: "numeric",
-                            month: "numeric",
-                            year: "numeric",
-                          })}
-                        </b>
-                      </span>
-                      <span>
-                        Denúncia de <b> {denuncia.category}</b>
-                      </span>
-                      <span>
-                        Reclamante: <b> {denuncia.name || "Anônimo"}</b>
-                      </span>
-                      <span>
-                        Setor denunciado: <b> {denuncia.sector}</b>
-                      </span>
-                    </p>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <ButtonFinalizar
-                      tipo="Procedente"
-                      handleFinalizar={handleFinalizar}
-                    />
-                    <ButtonFinalizar
-                      tipo="Improcedente"
-                      handleFinalizar={handleFinalizar}
-                    />
-                    <ButtonFinalizar
-                      
-                      tipo="Dados Insuficientes"
-                      handleFinalizar={handleFinalizar}
-                    />
-                    <Button variant="secondary" onClick={handleCloseFinalizar}>
-                      Não Finalizar
-                    </Button>
-                  </Modal.Footer>
-                </form>
+                <Modal.Header closeButton>
+                  <h6>Deseja finalizar esta denúncia?</h6>
+                </Modal.Header>
+                <Modal.Body>
+                  <p className="d-flex flex-column">
+                    <span>
+                      Protocolo n. <b> {denuncia.protocolo_id}</b>
+                    </span>
+                    <span>
+                      Data da denúncia:{" "}
+                      <b>
+                        {new Date(
+                          denuncia.createdAt.slice(0, -1)
+                        ).toLocaleDateString("pt-br", {
+                          day: "numeric",
+                          month: "numeric",
+                          year: "numeric"
+                        })}
+                      </b>
+                    </span>
+                    <span>
+                      Denúncia de <b> {denuncia.category}</b>
+                    </span>
+                    <span>
+                      Reclamante: <b> {denuncia.name || "Anônimo"}</b>
+                    </span>
+                    <span>
+                      Setor denunciado: <b> {denuncia.sector}</b>
+                    </span>
+                  </p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    value="Finalizar procedente"
+                    onClick={(e) => {
+                      handleFinalizar(e);
+                    }}
+                  >
+                    Finalizar Procedente
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    value="Finalizar improcedente"
+                    onClick={(e) => {
+                      handleFinalizar(e);
+                    }}
+                  >
+                    Finalizar Improcedente
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    value="Finalizar dados insuficientes"
+                    onClick={(e) => {
+                      handleFinalizar(e);
+                    }}
+                  >
+                    Finalizar Dados Insuficientes
+                  </button>
+                  <Button variant="secondary" onClick={handleCloseFinalizar}>
+                    Não Finalizar
+                  </Button>
+                </Modal.Footer>
               </Modal>
             </div>
           );
