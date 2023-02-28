@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { NavbarAdmin, FooterAdmin, MsgSucess } from "../../components/index.js";
 
 import loadingGif from "../../imgs/loading-state.gif";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Toast, Form, InputGroup } from "react-bootstrap";
 
 import "../css/AdminHome.css";
 
@@ -27,10 +27,13 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
   let userId = sessionStorage.getItem("userId");
   let status;
 
+  const [messageUser, setMessageUser] = useState("");
+
   useEffect(() => {
     const getDenuncia = async () => {
       try {
         const data = await api.getDenuncia(id);
+        console.log(data);
         setDenuncia(data);
         setTimeout(() => {
           setLoading(false);
@@ -86,7 +89,17 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
       setMessage(error);
     }
   };
-
+  const handleSendMessage = async (e) => {
+    setMessageUser(messageUser);
+    console.log(messageUser);
+    try {
+      const newMessage = await api.sendMessage(id, { messageUser });
+      console.log(newMessage);
+    } catch (error) {
+      console.log(error);
+      setMessage(error);
+    }
+  };
   return (
     <div>
       <NavbarAdmin />
@@ -243,6 +256,61 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                   </div>
                 </div>
               </div>
+              {denuncia.status === "em-andamento" ? (
+                <div className="align-mobile auditoria d-flex">
+                  <div className="card w-100 m-3">
+                    <div className="d-flex card-header justify-content-between align-items-center">
+                      <h5 className=" mb-0 w-100 text-center">Mensagens</h5>
+                    </div>
+                    <div className="card-body">
+                      {denuncia?.messages_id.map((message, index) => {
+                        return (
+                          <Toast key={index}>
+                            <Toast.Header closeButton={false}>
+                              <i className="bi bi-person-circle"> </i>
+                              <strong className="me-auto mx-2"> {message.userName}</strong>
+                              <small>
+                                {new Date(
+                                  message.createdAt.slice(0, -1)
+                                ).toLocaleDateString("pt-br", {
+                                  day: "numeric",
+                                  month: "numeric",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit"
+                                })}
+                              </small>
+                            </Toast.Header>
+                            <Toast.Body>{message.descricao}</Toast.Body>
+                          </Toast>
+                        );
+                      })}
+                      {denuncia.etapa === "ouvidoria" ? (
+                        <form>
+                          <InputGroup className="mb-3">
+                            <Form.Control
+                              as="textarea"
+                              atial-label="Message"
+                              value={messageUser}
+                              onChange={(e) => setMessageUser(e.target.value)}
+                            />
+                            <button
+                              className="btn btn-primary"
+                              onClick={handleSendMessage}
+                            >
+                              <i className="bi bi-send-fill"></i>
+                            </button>
+                          </InputGroup>
+                        </form>
+                      ) : (
+                        <>Aguardando resposta do reclamante.</>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
               <div className="align-mobile auditoria d-flex">
                 <div className="card w-100 m-3">
                   <div className="d-flex card-header justify-content-between align-items-center">
