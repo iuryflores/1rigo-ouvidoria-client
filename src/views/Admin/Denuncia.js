@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { NavbarAdmin, FooterAdmin, MsgSucess } from "../../components/index.js";
+import { ButtonFinalizar } from "../../components/ButtonFinalizar";
 
 import loadingGif from "../../imgs/loading-state.gif";
-import { Button, Modal, Toast, Form, InputGroup } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 import "../css/AdminHome.css";
 
@@ -27,13 +28,10 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
   let userId = sessionStorage.getItem("userId");
   let status;
 
-  const [messageUser, setMessageUser] = useState("");
-
   useEffect(() => {
     const getDenuncia = async () => {
       try {
         const data = await api.getDenuncia(id);
-        console.log(data);
         setDenuncia(data);
         setTimeout(() => {
           setLoading(false);
@@ -78,23 +76,11 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
     const userId = sessionStorage.getItem("userId");
 
     const tipo = e.target.innerText;
-    console.log(tipo);
+
     try {
       const newAudit = await api.endAudit(id, userId, { tipo });
-      if (newAudit) {
-        window.location.reload();
-      }
-    } catch (error) {
-      console.log(error);
-      setMessage(error);
-    }
-  };
-  const handleSendMessage = async (e) => {
-    setMessageUser(messageUser);
-    console.log(messageUser);
-    try {
-      const newMessage = await api.sendMessage(id, { messageUser });
-      console.log(newMessage);
+      navigate(`/admin/denuncia/${id}`);
+      return newAudit;
     } catch (error) {
       console.log(error);
       setMessage(error);
@@ -112,10 +98,10 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
           const days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // Divide o total pelo total de milisegundos correspondentes a 1 dia. (1000 milisegundos = 1 segundo).
 
           if (denuncia.status === "pendente") status = "warning";
+          if (denuncia.status === "finalizado") status = "secondary";
           if (denuncia.status === "em-andamento") status = "info";
-          if (denuncia.status.slice(0, 10) === "finalizado")
-            status = "secondary";
-          if (days >= 7 && denuncia.status.slice(0, 10) !== "finalizado") {
+
+          if (days >= 7 && denuncia.status !== "finalizado") {
             status = "danger";
             denuncia.status = `Pendente à ${days} dias`;
           }
@@ -153,7 +139,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                   <></>
                 )}
                 <span className={`btn btn-${status}`}>
-                  {denuncia.status.toUpperCase().replaceAll("-", " ")}
+                  {denuncia.status.toUpperCase()}
                 </span>
               </div>
               <div className="align-mobile d-flex flex-nowrap">
@@ -175,7 +161,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                                 month: "numeric",
                                 year: "numeric",
                                 hour: "2-digit",
-                                minute: "2-digit"
+                                minute: "2-digit",
                               })}
                               h
                             </b>
@@ -256,61 +242,6 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                   </div>
                 </div>
               </div>
-              {denuncia.status === "em-andamento" ? (
-                <div className="align-mobile auditoria d-flex">
-                  <div className="card w-100 m-3">
-                    <div className="d-flex card-header justify-content-between align-items-center">
-                      <h5 className=" mb-0 w-100 text-center">Mensagens</h5>
-                    </div>
-                    <div className="card-body">
-                      {denuncia?.messages_id.map((message, index) => {
-                        return (
-                          <Toast key={index}>
-                            <Toast.Header closeButton={false}>
-                              <i className="bi bi-person-circle"> </i>
-                              <strong className="me-auto mx-2"> {message.userName}</strong>
-                              <small>
-                                {new Date(
-                                  message.createdAt.slice(0, -1)
-                                ).toLocaleDateString("pt-br", {
-                                  day: "numeric",
-                                  month: "numeric",
-                                  year: "numeric",
-                                  hour: "2-digit",
-                                  minute: "2-digit"
-                                })}
-                              </small>
-                            </Toast.Header>
-                            <Toast.Body>{message.descricao}</Toast.Body>
-                          </Toast>
-                        );
-                      })}
-                      {denuncia.etapa === "ouvidoria" ? (
-                        <form>
-                          <InputGroup className="mb-3">
-                            <Form.Control
-                              as="textarea"
-                              atial-label="Message"
-                              value={messageUser}
-                              onChange={(e) => setMessageUser(e.target.value)}
-                            />
-                            <button
-                              className="btn btn-primary"
-                              onClick={handleSendMessage}
-                            >
-                              <i className="bi bi-send-fill"></i>
-                            </button>
-                          </InputGroup>
-                        </form>
-                      ) : (
-                        <>Aguardando resposta do reclamante.</>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <></>
-              )}
               <div className="align-mobile auditoria d-flex">
                 <div className="card w-100 m-3">
                   <div className="d-flex card-header justify-content-between align-items-center">
@@ -339,7 +270,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                                   year: "numeric",
                                   hour: "2-digit",
                                   minute: "2-digit",
-                                  second: "2-digit"
+                                  second: "2-digit",
                                 })}
                               </td>
                               <td className="no-mobile">{audit.operacao}</td>
@@ -376,7 +307,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                           ).toLocaleDateString("pt-br", {
                             day: "numeric",
                             month: "numeric",
-                            year: "numeric"
+                            year: "numeric",
                           })}
                         </b>
                       </span>
@@ -408,72 +339,57 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                 aria-labelledby="example-modal-sizes-title-lg"
                 size="lg"
               >
-                <Modal.Header closeButton>
-                  <h6>Deseja finalizar esta denúncia?</h6>
-                </Modal.Header>
-                <Modal.Body>
-                  <p className="d-flex flex-column">
-                    <span>
-                      Protocolo n. <b> {denuncia.protocolo_id}</b>
-                    </span>
-                    <span>
-                      Data da denúncia:{" "}
-                      <b>
-                        {new Date(
-                          denuncia.createdAt.slice(0, -1)
-                        ).toLocaleDateString("pt-br", {
-                          day: "numeric",
-                          month: "numeric",
-                          year: "numeric"
-                        })}
-                      </b>
-                    </span>
-                    <span>
-                      Denúncia de <b> {denuncia.category}</b>
-                    </span>
-                    <span>
-                      Reclamante: <b> {denuncia.name || "Anônimo"}</b>
-                    </span>
-                    <span>
-                      Setor denunciado: <b> {denuncia.sector}</b>
-                    </span>
-                  </p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <button
-                    className="btn btn-primary"
-                    type="submit"
-                    value="Finalizar procedente"
-                    onClick={(e) => {
-                      handleFinalizar(e);
-                    }}
-                  >
-                    Finalizar Procedente
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    type="submit"
-                    value="Finalizar improcedente"
-                    onClick={(e) => {
-                      handleFinalizar(e);
-                    }}
-                  >
-                    Finalizar Improcedente
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    type="submit"
-                    value="Finalizar dados insuficientes"
-                    onClick={(e) => {
-                      handleFinalizar(e);
-                    }}
-                  >
-                    Finalizar Dados Insuficientes
-                  </button>
-                  <Button variant="secondary" onClick={handleCloseFinalizar}>
-                    Não Finalizar
-                  </Button>
-                </Modal.Footer>
+                <form onSubmit={handleFinalizar}>
+                  <Modal.Header closeButton>
+                    <h6>Deseja finalizar esta denúncia?</h6>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p className="d-flex flex-column">
+                      <span>
+                        Protocolo n. <b> {denuncia.protocolo_id}</b>
+                      </span>
+                      <span>
+                        Data da denúncia:{" "}
+                        <b>
+                          {new Date(
+                            denuncia.createdAt.slice(0, -1)
+                          ).toLocaleDateString("pt-br", {
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric",
+                          })}
+                        </b>
+                      </span>
+                      <span>
+                        Denúncia de <b> {denuncia.category}</b>
+                      </span>
+                      <span>
+                        Reclamante: <b> {denuncia.name || "Anônimo"}</b>
+                      </span>
+                      <span>
+                        Setor denunciado: <b> {denuncia.sector}</b>
+                      </span>
+                    </p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <ButtonFinalizar
+                      tipo="Procedente"
+                      handleFinalizar={handleFinalizar}
+                    />
+                    <ButtonFinalizar
+                      tipo="Improcedente"
+                      handleFinalizar={handleFinalizar}
+                    />
+                    <ButtonFinalizar
+                      
+                      tipo="Dados Insuficientes"
+                      handleFinalizar={handleFinalizar}
+                    />
+                    <Button variant="secondary" onClick={handleCloseFinalizar}>
+                      Não Finalizar
+                    </Button>
+                  </Modal.Footer>
+                </form>
               </Modal>
             </div>
           );
