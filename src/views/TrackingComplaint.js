@@ -8,14 +8,11 @@ export const TrackingComplaint = ({
   loading,
   setLoading,
   message,
-  setMessage,
+  setMessage
 }) => {
-  const id = "";
-
   const { protocolo_id, pass_protocolo } = useParams();
 
-  const [dataAPI, setDataAPI] = useState([]);
-  /*const [denuncia, setDenuncias] = useState();*/
+  const [dataAPI, setDataAPI] = useState();
   const [messageUser, setMessageUser] = useState("");
 
   useEffect(() => {
@@ -23,6 +20,7 @@ export const TrackingComplaint = ({
       try {
         const data = await api.trackComplaint(protocolo_id, pass_protocolo);
         setDataAPI(data);
+        console.log(data.name);
         setLoading(false);
       } catch (error) {
         console.log(error, "Error to get data");
@@ -30,12 +28,20 @@ export const TrackingComplaint = ({
     };
     getData();
   }, [setLoading, protocolo_id, pass_protocolo]);
-  console.log(dataAPI);
+  let user;
+  dataAPI?.forEach((complaint) => {
+    user = complaint.complaint_ID.name;
+  });
+  console.log(user);
   const handleSendMessage = async (e) => {
     setMessageUser(messageUser);
-    console.log(messageUser);
+
     try {
-      const newMessage = await api.sendMessage(id, { messageUser });
+      const newMessage = await api.sendMessageUser(
+        protocolo_id,
+        pass_protocolo,
+        { messageUser, user }
+      );
       console.log(newMessage);
     } catch (error) {
       console.log(error);
@@ -45,16 +51,10 @@ export const TrackingComplaint = ({
 
   return !loading ? (
     <div className="d-flex justify-content-center w-100">
-      {dataAPI.map((complaint, index) => {
-        let category = complaint.complaint_ID.category;
-
-        if (category === "moral_harassment") {
-          category = "Assédio Moral";
-        }
-
+      {dataAPI?.map((complaint, index) => {
         return (
-          <div className="w-100" key={index}>
-            <div className="align-mobile d-flex flex-nowrap w-100" >
+          <div className="w-100 container" key={index}>
+            <div className="align-mobile d-flex flex-nowrap w-100 ">
               <div className="card w-50 m-3">
                 <div className="card-header">Dados do reclamante</div>
                 <div className="card-body no-shadow">
@@ -93,11 +93,11 @@ export const TrackingComplaint = ({
                     <span>
                       <strong>Data: </strong>
                       {new Date(
-                        complaint.complaint_ID.createdAt.slice(0, -1)
+                        complaint.createdAt?.slice(0, -1)
                       ).toLocaleDateString("pt-br", {
                         day: "numeric",
                         month: "numeric",
-                        year: "numeric",
+                        year: "numeric"
                       })}
                     </span>
                     <span>
@@ -109,7 +109,8 @@ export const TrackingComplaint = ({
                       {complaint.complaint_ID.previousComplaint}
                     </span>
                     <span>
-                      <strong>Categoria:</strong> {category}
+                      <strong>Categoria:</strong>{" "}
+                      {complaint.complaint_ID.category}
                     </span>
                     <span>
                       <strong>Departamento: </strong>
@@ -146,7 +147,7 @@ export const TrackingComplaint = ({
                     <h5 className=" mb-0 w-100 text-center">Mensagens</h5>
                   </div>
                   <div className="card-body">
-                    {complaint.complaint_ID?.messages_id.map(
+                    {complaint?.complaint_ID?.messages_id.map(
                       (message, index) => {
                         return (
                           <Toast key={index}>
@@ -163,7 +164,7 @@ export const TrackingComplaint = ({
                         );
                       }
                     )}
-                    {complaint.complaint_ID?.etapa === "ouvidoria" ? (
+                    {complaint?.complaint_ID?.etapa === "usuario" ? (
                       <form>
                         <InputGroup className="mb-3">
                           <Form.Control
@@ -181,13 +182,13 @@ export const TrackingComplaint = ({
                         </InputGroup>
                       </form>
                     ) : (
-                      <>Aguardando resposta do reclamante.</>
+                      <>Aguardando resposta do comitê de denúncia.</>
                     )}
                   </div>
                 </div>
               </div>
             ) : (
-              <>Loading...</>
+              <></>
             )}
           </div>
         );

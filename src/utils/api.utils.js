@@ -81,6 +81,18 @@ class Api {
       throw error.response.data.msg;
     }
   };
+  sendMessageUser = async (protocolo_id, pass_protocolo, messageUser, user) => {
+    try {
+      const { data } = await this.api.patch(
+        `/track-complaint/${protocolo_id}/${pass_protocolo}`,
+        messageUser, user
+      );
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+
   /*ADMIN FUNCTIONS*/
   getAuditById = async (complaintId) => {
     try {
