@@ -8,7 +8,7 @@ export const TrackingComplaint = ({
   loading,
   setLoading,
   message,
-  setMessage
+  setMessage,
 }) => {
   const { protocolo_id, pass_protocolo } = useParams();
 
@@ -97,7 +97,7 @@ export const TrackingComplaint = ({
                       ).toLocaleDateString("pt-br", {
                         day: "numeric",
                         month: "numeric",
-                        year: "numeric"
+                        year: "numeric",
                       })}
                     </span>
                     <span>
@@ -157,7 +157,18 @@ export const TrackingComplaint = ({
                                 {" "}
                                 {message.userName}
                               </strong>
-                              <small>{message.createdAt}</small>
+                              <small>
+                                {new Date(
+                                  message.createdAt.slice(0, -1)
+                                ).toLocaleDateString("pt-br", {
+                                  day: "numeric",
+                                  month: "numeric",
+                                  year: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                 
+                                })}
+                              </small>
                             </Toast.Header>
                             <Toast.Body>{message.descricao}</Toast.Body>
                           </Toast>
