@@ -87,7 +87,7 @@ export const TrackingComplaint = ({
                 </div>
               </div>
               <div className="card w-50 m-3">
-                <div className="card-header">Dados da manifestação</div>
+                <div className="card-header">Dados da denúncia</div>
                 <div className="card-body no-shadow">
                   <p className="card-text w-100 d-flex flex-column no-shadow">
                     <span>

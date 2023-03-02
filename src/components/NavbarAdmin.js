@@ -10,7 +10,7 @@ export const NavbarAdmin = () => {
       <nav className="nav-admin">
         <ul className="container">
           <div className="logo">
-            <Link to="/">Canal de Manifestações</Link>
+            <Link to="/">Canal de Denúncias</Link>
           </div>
           <div className="logo">
             <img src={logoIHF} alt="Logotipo Iury" />
@@ -22,7 +22,7 @@ export const NavbarAdmin = () => {
           </Link>
           <Link to="/admin/manifestacoes/" className="link no-mobile">
             <i className="bi bi-chat-right-quote-fill"></i>
-            <span>MANIFESTAÇÕES</span>
+            <span>DENÚNCIAS</span>
           </Link>
           <Link to="/admin/home/" className="link no-mobile">
             <i className="bi bi-people-fill"></i>

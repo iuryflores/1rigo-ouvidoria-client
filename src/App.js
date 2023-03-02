@@ -13,6 +13,9 @@ import {
   Saude,
   AddForm
 } from "./views/index";
+
+import {Ouvidoria} from './views/ouvidoria/index.js'
+import {OuvidoriaForm} from './views/ouvidoria/OuvidoriaForm.js'
 import loadingGif from "./imgs/loading-state.gif";
 import {
   AdminLogin,
@@ -25,6 +28,7 @@ import {
 } from "./views/Admin/index.js";
 
 import { Navbar, Footer } from "./components/index";
+import { Tipos } from "./views/ouvidoria/Tipos";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -32,10 +36,11 @@ function App() {
 
   let location = useLocation().pathname;
   let newLocation = location.slice(0, 7);
+  let newLocationOuvidoria = location.slice(0, 11);
 
   return (
     <div>
-      {newLocation !== "/admin/" && <Navbar />}
+      {newLocation !== "/admin/" && newLocationOuvidoria !== "/ouvidoria/" && <Navbar />}
       <Routes>
         <Route
           path="/"
@@ -227,8 +232,44 @@ function App() {
             />
           }
         />
+        <Route
+          path="/ouvidoria/"
+          element={
+            <Ouvidoria
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
+        <Route
+          path="/ouvidoria/tipos/:tipo"
+          element={
+            <OuvidoriaForm
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
+         <Route
+          path="/ouvidoria/tipos"
+          element={
+            <Tipos
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
       </Routes>
-      {newLocation !== "/admin/" && <Footer />}
+      {newLocation !== "/admin/" && newLocationOuvidoria !== "/ouvidoria/" && <Footer />}
     </div>
   );
 }

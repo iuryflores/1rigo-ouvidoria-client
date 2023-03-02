@@ -1,12 +1,29 @@
 .wrap {
-  margin-bottom: 150px;;
+  margin-bottom: 150px;
 }
 .denuncias-index {
   display: flex;
   flex-direction: column;
   font-size: 0.9rem;
 }
+.denuncias-ouvidoria {
+  flex-direction: row !important;
+  justify-content: center !important;
+}
+.denuncias-ouvidoria div {
+  margin: 10px;
+ width: 25%;
+}
 
+.denuncias-ouvidoria div a {
+  flex-direction: column;
+  margin: 10px;
+  padding: 30px 25px !important;
+}
+.denuncias-ouvidoria p {
+  margin-top: 20px !important;
+  font-size: 1rem;
+}
 .denuncias-index div a {
   display: flex;
   background-color: aliceblue;

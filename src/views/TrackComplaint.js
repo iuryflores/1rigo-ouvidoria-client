@@ -33,7 +33,7 @@ export const TrackComplaint = ({
   });
   return (
     <div className="container d-flex flex-column align-items-center">
-      <h3>Acompanhe sua manifestação</h3>
+      <h3>Acompanhe sua denúncia</h3>
       <form onSubmit={handleSubmit} className="d-flex flex-column w-75">
         {message !== null && (
           <MsgError className="text-center">{message}</MsgError>
