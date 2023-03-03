@@ -29,6 +29,7 @@ import {
 
 import { Navbar, Footer } from "./components/index";
 import { Tipos } from "./views/ouvidoria/Tipos";
+import { Signup } from "./views/Admin/Signup";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -152,6 +153,18 @@ function App() {
           path="/admin/login"
           element={
             <AdminLogin
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
+        <Route
+          path="/admin/signup"
+          element={
+            <Signup
               message={message}
               setMessage={setMessage}
               loading={loading}

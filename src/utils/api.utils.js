@@ -3,8 +3,8 @@ import axios from "axios";
 class Api {
   constructor() {
     this.api = axios.create({
-      baseURL: "https://dead-erin-adder-shoe.cyclic.app"
-      /*baseURL: "http://localhost:5000/"*/
+      /*baseURL: "https://dead-erin-adder-shoe.cyclic.app"*/
+      baseURL: "http://localhost:5000/"
     });
     this.api.interceptors.request.use(
       (config) => {
@@ -129,7 +129,7 @@ class Api {
   sendMessage = async (id, messageUser, userId) => {
     try {
       const { data } = await this.api.patch(
-        `/admin/denuncia/${id}`,
+        `/admin/denuncia/message/${id}`,
         messageUser,
         userId
       );

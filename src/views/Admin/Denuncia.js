@@ -82,7 +82,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
     try {
       const newAudit = await api.endAudit(id, userId, { tipo });
       if (newAudit) {
-        window.location.reload();
+       navigate(0)
       }
     } catch (error) {
       console.log(error);
@@ -92,6 +92,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
   const handleSendMessage = async (e) => {
     setMessageUser(messageUser);
     console.log(messageUser);
+    
     try {
       const newMessage = await api.sendMessage(id, { messageUser });
       console.log(newMessage);
@@ -116,7 +117,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
           if (denuncia.status === "finalizado") status = "secondary";
           if (denuncia.status === "em-andamento") status = "info";
 
-          if (days >= 7 && denuncia.status !== "finalizado") {
+          if (days >= 2 && denuncia.status !== "finalizado") {
             status = "danger";
             denuncia.status = `Pendente à ${days} dias`;
           }
@@ -412,7 +413,7 @@ export const Denuncia = ({ loading, setLoading, message, setMessage }) => {
                 aria-labelledby="example-modal-sizes-title-lg"
                 size="lg"
               >
-                <form onSubmit={handleFinalizar}>
+                <form >
                   <Modal.Header closeButton>
                     <h6>Deseja finalizar esta denúncia?</h6>
                   </Modal.Header>

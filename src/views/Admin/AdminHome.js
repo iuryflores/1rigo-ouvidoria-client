@@ -114,7 +114,7 @@ export const AdminHome = ({ loading, setLoading, loadingGif }) => {
             >
               <div className="card-body">
                 <i className="bi bi-box-seam number-stat-home"></i>
-                <p className="p">Total de manifestações recebidas</p>
+                <p className="p">Total de denúncias recebidas</p>
                 <p className="number-stat-home">{denuncias.length}</p>
               </div>
             </Link>
