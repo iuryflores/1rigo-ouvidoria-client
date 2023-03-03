@@ -41,6 +41,11 @@ export const Footer = () => {
                 Envie uma dúvida
               </Link>
             </li>
+             <li className="nav-item">
+              <Link to="/admin/login" className="nav-link px-2 ">
+                Painel Admin
+              </Link>
+            </li>
           </ul>
         )}
       </footer>
