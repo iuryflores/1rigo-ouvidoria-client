@@ -37,8 +37,8 @@ export const Footer = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/send-question" className="nav-link px-2 ">
-                Envie uma dúvida
+              <Link to="/ouvidoria/" className="nav-link px-2 ">
+                Canal de Ouvidoria
               </Link>
             </li>
              <li className="nav-item">
