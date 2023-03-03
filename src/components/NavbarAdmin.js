@@ -24,7 +24,7 @@ export const NavbarAdmin = () => {
             <i className="bi bi-chat-right-quote-fill"></i>
             <span>DENÚNCIAS</span>
           </Link>
-          <Link to="/admin/home/" className="link no-mobile">
+          <Link to="/admin/users/" className="link no-mobile">
             <i className="bi bi-people-fill"></i>
             <span>USUÁRIOS</span>
           </Link>

@@ -14,7 +14,6 @@ export const AdminLogin = ({ message, setMessage }) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     try {
       await api.login({ email, password });
       navigate("/admin/home");
@@ -37,19 +36,20 @@ export const AdminLogin = ({ message, setMessage }) => {
   return (
     <div className="screen">
       <div className="login">
-        <h4>Welcome</h4>
+        <h4>Bem vindo</h4>
         <h5 className="d-flex flex-column align-items-center">
           <span className="mb-3">
             <i className="bi bi-chat-quote "></i> Gerenciador de denúncia
           </span>
-          <img className="logo-1rigo mt-3 mb-3" alt="logomarca 1RIGO" src={logo1RIGO} />
+          <img
+            className="logo-1rigo mt-3 mb-3"
+            alt="logomarca 1RIGO"
+            src={logo1RIGO}
+          />
         </h5>
         {message !== null && <MsgSucess>{message}</MsgSucess>}
         {error !== null && <MsgError>{error}</MsgError>}
-        <form
-          onSubmit={handleSubmit}
-          className="d-flex flex-column align-items-center w-75"
-        >
+        <div className="d-flex flex-column align-items-center w-75">
           <label>Email:</label>
           <input
             className="input-login"
@@ -66,13 +66,13 @@ export const AdminLogin = ({ message, setMessage }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="btn btn-primary" type="submit">
+          <button className="btn btn-primary" onClick={handleSubmit}>
             Login
           </button>
           <p className="mt-3">
             Não possui uma conta? <Link to="/admin/signup">Criar</Link>
           </p>
-        </form>
+        </div>
       </div>
     </div>
   );

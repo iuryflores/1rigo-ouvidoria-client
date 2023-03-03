@@ -4,14 +4,14 @@ class Api {
   constructor() {
     this.api = axios.create({
       /*baseURL: "https://dead-erin-adder-shoe.cyclic.app"*/
-      baseURL: "http://localhost:5000/"
+      baseURL: "http://localhost:5000/",
     });
     this.api.interceptors.request.use(
       (config) => {
         const token = sessionStorage.getItem("token");
         if (token) {
           config.headers = {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           };
         }
         return config;
@@ -48,7 +48,22 @@ class Api {
       throw error.response.data.msg;
     }
   };
-
+  getUsers = async () => {
+    try {
+      const { data } = await this.api.get("/users");
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  getUserLogged = async (userId) => {
+    try {
+      const { data } = await this.api.get("/user", userId);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
   addComplaint = async (complaintData, category) => {
     try {
       const { data } = await this.api.post(
@@ -86,7 +101,8 @@ class Api {
     try {
       const { data } = await this.api.patch(
         `/track-complaint/${protocolo_id}/${pass_protocolo}`,
-        messageUser, user
+        messageUser,
+        user
       );
       return data;
     } catch (error) {
