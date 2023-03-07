@@ -70,7 +70,6 @@ class Api {
         `/add-complaint/${category}`,
         complaintData
       );
-      console.log({ data });
       return data;
     } catch (error) {
       throw error.response.data.msg;
@@ -181,6 +180,18 @@ class Api {
   getDenunciasByStatus = async (status) => {
     try {
       const { data } = await this.api.get(`/admin/denuncias/status/${status}`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  /*OUVIDORIA*/
+  addOuvidoria = async (ouvidoriaData, tipo) => {
+    try {
+      const { data } = await this.api.post(
+        `/add-ouvidoria/tipos/${tipo}`,
+        ouvidoriaData
+      );
       return data;
     } catch (error) {
       throw error.response.data.msg;

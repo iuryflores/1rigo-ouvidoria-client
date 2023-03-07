@@ -34,7 +34,7 @@ export const NavbarAdmin = () => {
           </Link>
         </ul>
       </nav>
-      <div className="d-flex justify-content-end w-100 p-3">
+      <div className="container d-flex justify-content-end w-100 p-3">
         <i className="bi bi-person-circle"> </i> &nbsp;
         <span> Iury Flores </span>
       </div>

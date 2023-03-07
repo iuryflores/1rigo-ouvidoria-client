@@ -1,5 +1,6 @@
 .nav-admin {
   display: flex;
+  justify-content: space-around;
 }
 .nav-admin ul {
   list-style-type: none;

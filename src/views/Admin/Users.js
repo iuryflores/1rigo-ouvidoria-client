@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
-import { useNavigate, useParams, Link } from "react-router-dom";
-import { NavbarAdmin, FooterAdmin, MsgSucess } from "../../components/index.js";
-import { ButtonFinalizar } from "../../components/ButtonFinalizar";
+import { useNavigate } from "react-router-dom";
+import { NavbarAdmin, FooterAdmin } from "../../components/index.js";
 
 import loadingGif from "../../imgs/loading-state.gif";
-import { Button, Modal, Toast, Form, InputGroup } from "react-bootstrap";
 
 import "../css/AdminHome.css";
 
@@ -13,6 +11,8 @@ export const Users = ({ loading, setLoading, message, setMessage }) => {
   const [users, setUsers] = useState();
 
   let userId = sessionStorage.getItem("userId");
+
+  const navigate = useNavigate();
 
   console.log(userId);
   useEffect(() => {
@@ -39,11 +39,15 @@ export const Users = ({ loading, setLoading, message, setMessage }) => {
     };
     getUserLogged();
   }, [loading, setLoading, userId]);
-  let count = 0;
+
+  const goToUser = (userId) => {
+    navigate(`/admin/user/${userId}/`);
+  };
+
   return (
     <div>
       <NavbarAdmin />
-      <div>
+      <div className="container">
         <div className="mx-3">
           <h4>
             <i className="bi bi-people-fill"></i> Usuários
@@ -62,10 +66,6 @@ export const Users = ({ loading, setLoading, message, setMessage }) => {
                 CPF
               </th>
               <th scope="col">Email</th>
-
-              <th className="text-center" scope="col">
-                Ações
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -77,9 +77,13 @@ export const Users = ({ loading, setLoading, message, setMessage }) => {
                 } else {
                   iconActive = "red";
                 }
-                count++;
+
                 return (
-                  <tr key={index}>
+                  <tr
+                    key={index}
+                    className="clickable"
+                    onClick={() => goToUser(user._id)}
+                  >
                     <th scope="row" style={{ color: iconActive }}>
                       <i className="bi bi-circle-fill"></i>
                     </th>
@@ -89,11 +93,6 @@ export const Users = ({ loading, setLoading, message, setMessage }) => {
                     </td>
                     <td>{user.cpf}</td>
                     <td className="no-mobile">{user.email}</td>
-                    <td className="text-center">
-                      <Link to={`/admin/user/${user._id}/`}>
-                        <i className="bi bi-eye-fill"></i>
-                      </Link>
-                    </td>
                   </tr>
                 );
               })

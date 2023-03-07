@@ -16,3 +16,6 @@
 .auditoria th {
   padding: 0 !important;
 }
+.clickable:hover {
+  cursor: pointer;
+}

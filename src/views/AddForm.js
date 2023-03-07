@@ -52,7 +52,7 @@ export const AddForm = ({ setMessage }) => {
 
     try {
       let chars =
-        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@#$%^&*";
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@$%^&*";
       let passwordLength = 10;
       let password = "";
 
@@ -79,7 +79,6 @@ export const AddForm = ({ setMessage }) => {
         },
         category
       );
-    
 
       setMessage(
         `Sua reclamação foi enviada com sucesso! Entraremos em contato o mais breve possível. Acompanhe sua solicitação pelo número de protocolo: ${insert.protocolo_id} e a senha para acesso: ${password}`
@@ -97,7 +96,6 @@ export const AddForm = ({ setMessage }) => {
     }, 6000);
   };
   const showID = () => {
-    console.log("entrei no sim");
     setType(true);
   };
   const closeID = () => {

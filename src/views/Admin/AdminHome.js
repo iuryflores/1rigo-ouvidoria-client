@@ -50,7 +50,7 @@ export const AdminHome = ({ loading, setLoading, loadingGif }) => {
   return (
     <div className="admin-home">
       <NavbarAdmin />
-      <hr />
+      <hr className="container" />
       {!loading ? (
         <section className="d-flex  justify-content-center">
           <div className="d-flex container flex-wrap row">

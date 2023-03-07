@@ -1,27 +1,72 @@
 import React, { useState } from "react";
-
+import api from "../../utils/api.utils.js";
+import { useNavigate, useParams } from "react-router-dom";
+import { MsgError } from "../../components/Shared";
 import { NavbarOuvidoria } from "../../components/NavbarOuvidoria";
 
 export const OuvidoriaForm = ({ setMessage }) => {
+  const [error, setError] = useState("");
   const [type, setType] = useState(false);
 
+  const { tipo } = useParams();
+
+  const navigate = useNavigate();
   //INPUTS
   const [name, setName] = useState("");
-
   const [email, setEmail] = useState("");
   const [telephone, setTelephone] = useState("");
 
   const [details, setDetails] = useState("");
-  const [previousComplaint, setPreviousComplaint] = useState("");
+  const [prevProtocolo, setPrevProtocolo] = useState("");
   const [agreement, setAgreement] = useState(false);
 
   //HANDLE SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      let chars =
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ!@$%^&*";
+      let passwordLength = 10;
+      let password = "";
+
+      for (let i = 0; i < passwordLength; i++) {
+        let randomNumber = Math.floor(Math.random() * chars.length);
+        password += chars.substring(randomNumber, randomNumber + 1);
+      }
+
+      const insert = await api.addOuvidoria(
+        {
+          name,
+          email,
+          telephone,
+          tipo,
+          details,
+          prevProtocolo,
+          agreement,
+          password,
+        },
+        tipo
+      );
+    
+      if (insert) {
+        setMessage(
+          `Sua manifestação foi enviada com sucesso! Entraremos em contato o mais breve possível. Acompanhe sua solicitação pelo número de protocolo: ${insert.protocolo_id} e a senha para acesso: ${password}`
+        );
+        navigate("/ouvidoria/");
+      }
+    } catch (error) {
+      showMessage(error);
+    }
   };
 
+  const showMessage = (error) => {
+    setError(error);
+    setTimeout(() => {
+      setError("");
+    }, 6000);
+  };
   const showID = () => {
-    console.log("entrei no sim");
     setType(true);
   };
   const closeID = () => {
@@ -107,17 +152,17 @@ export const OuvidoriaForm = ({ setMessage }) => {
             ></textarea>
           </div>
           <div className="mb-3">
-            <label htmlFor="previousComplaint">
+            <label htmlFor="prevProtocolo">
               Se houver informe o número do protocolo:
             </label>
             <input
               className="form-control"
               type="number"
-              name="previousComplaint"
-              id="previousComplaint"
-              value={previousComplaint}
+              name="prevProtocolo"
+              id="prevProtocolo"
+              value={prevProtocolo}
               onChange={(e) => {
-                setPreviousComplaint(e.target.value);
+                setPrevProtocolo(e.target.value);
               }}
             />
           </div>
@@ -151,6 +196,7 @@ export const OuvidoriaForm = ({ setMessage }) => {
             </label>
           </div>
           <div className="mb-5">
+            {error !== "" && <MsgError id="erroID">{error}</MsgError>}
             <button type="submit" className="btn btn-primary">
               Enviar sua manifestação
             </button>
