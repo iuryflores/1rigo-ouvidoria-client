@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
 
 import "../css/AdminHome.css";
 export const AllDenuncias = ({ loading, setLoading, loadingGif }) => {
   const [denuncias, setDenuncias] = useState([]);
+
+  const navigate = useNavigate();
+
+  const goToDenuncia = (denunciaId) => {
+    navigate(`/admin/denuncia/${denunciaId}/`);
+  };
 
   useEffect(() => {
     const getAllDenuncias = async () => {
@@ -45,9 +51,6 @@ export const AllDenuncias = ({ loading, setLoading, loadingGif }) => {
                 Reclamante
               </th>
               <th scope="col">Status</th>
-              <th className="text-center" scope="col">
-                Ações
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -89,7 +92,11 @@ export const AllDenuncias = ({ loading, setLoading, loadingGif }) => {
                 }
                 count++;
                 return (
-                  <tr key={index}>
+                  <tr
+                    key={index}
+                    className="clickable"
+                    onClick={() => goToDenuncia(denuncia._id)}
+                  >
                     <th scope="row">{count}</th>
                     <td>
                       {new Date(
@@ -105,11 +112,6 @@ export const AllDenuncias = ({ loading, setLoading, loadingGif }) => {
                     <td className="no-mobile">{newCategoria}</td>
                     <td className="no-mobile">{denuncia.name || "Anônimo"}</td>
                     <td>{denuncia.status}</td>
-                    <td className="text-center">
-                      <Link to={`/admin/denuncia/${denuncia._id}/`}>
-                        <i className="bi bi-eye-fill"></i>
-                      </Link>
-                    </td>
                   </tr>
                 );
               })

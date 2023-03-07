@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
 
@@ -9,6 +9,12 @@ export const DenunciaByStatus = ({ loading, setLoading, loadingGif }) => {
   const { status } = useParams();
 
   const [denuncias, setDenuncias] = useState([]);
+
+  const navigate = useNavigate();
+
+  const goToDenuncia = (denunciaId) => {
+    navigate(`/admin/denuncia/${denunciaId}/`);
+  };
 
   useEffect(() => {
     const getDenunciasStatus = async () => {
@@ -50,9 +56,6 @@ export const DenunciaByStatus = ({ loading, setLoading, loadingGif }) => {
                 Reclamante
               </th>
               <th scope="col">Status</th>
-              <th className="text-center" scope="col">
-                Ações
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -60,7 +63,11 @@ export const DenunciaByStatus = ({ loading, setLoading, loadingGif }) => {
               denuncias?.map((denuncia, index) => {
                 count++;
                 return (
-                  <tr key={index}>
+                  <tr
+                    key={index}
+                    className="clickable"
+                    onClick={() => goToDenuncia(denuncia._id)}
+                  >
                     <th scope="row">{count}</th>
                     <td>
                       {new Date(
@@ -81,11 +88,6 @@ export const DenunciaByStatus = ({ loading, setLoading, loadingGif }) => {
                     <td>
                       {denuncia.status[0].toUpperCase() +
                         denuncia.status.substring(1)}
-                    </td>
-                    <td className="text-center">
-                      <Link to={`/admin/denuncia/${denuncia._id}/`}>
-                        <i className="bi bi-eye-fill"></i>
-                      </Link>
                     </td>
                   </tr>
                 );

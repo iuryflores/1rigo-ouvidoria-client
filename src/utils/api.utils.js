@@ -50,7 +50,7 @@ class Api {
   };
   getUsers = async () => {
     try {
-      const { data } = await this.api.get("/users");
+      const { data } = await this.api.get("/denuncias/users");
       return data;
     } catch (error) {
       throw error.response.data.msg;

@@ -14,6 +14,8 @@ export const AdminLogin = ({ message, setMessage }) => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
       await api.login({ email, password });
       navigate("/admin/home");
@@ -47,9 +49,13 @@ export const AdminLogin = ({ message, setMessage }) => {
             src={logo1RIGO}
           />
         </h5>
-        {message !== null && <MsgSucess>{message}</MsgSucess>}
-        {error !== null && <MsgError>{error}</MsgError>}
-        <div className="d-flex flex-column align-items-center w-75">
+        <form
+          onSubmit={handleSubmit}
+          className="d-flex flex-column align-items-center w-75"
+        >
+          {message !== null && <MsgSucess>{message}</MsgSucess>}
+          {error !== null && <MsgError>{error}</MsgError>}
+
           <label>Email:</label>
           <input
             className="input-login"
@@ -66,13 +72,13 @@ export const AdminLogin = ({ message, setMessage }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="btn btn-primary" onClick={handleSubmit}>
+          <button className="btn btn-primary" type="submit">
             Login
           </button>
           <p className="mt-3">
             Não possui uma conta? <Link to="/admin/signup">Criar</Link>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );

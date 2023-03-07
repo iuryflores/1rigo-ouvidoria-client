@@ -14,7 +14,10 @@ export const Users = ({ loading, setLoading, message, setMessage }) => {
 
   const navigate = useNavigate();
 
-  console.log(userId);
+  if (!userId) {
+    sessionStorage.removeItem("userId");
+    navigate("/");
+  }
   useEffect(() => {
     const getUsers = async () => {
       try {

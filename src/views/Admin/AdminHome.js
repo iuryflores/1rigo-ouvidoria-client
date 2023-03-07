@@ -36,13 +36,13 @@ export const AdminHome = ({ loading, setLoading, loadingGif }) => {
     if (denuncia.status === "em-andamento") {
       return totalEmAndamento++;
     }
-    if (denuncia.status === "finalizado-procedente") {
+    if (denuncia.status === "finalizada-procedente") {
       return totalFinalizadosProcedentes++;
     }
-    if (denuncia.status === "finalizado-improcedente") {
+    if (denuncia.status === "finalizada-improcedente") {
       return totalFinalizadosImprocedentes++;
     }
-    if (denuncia.status === "finalizado-dados-insuficientes") {
+    if (denuncia.status === "finalizada-dados-insuficientes") {
       return totalDadosInsuficientes++;
     }
   });
@@ -99,7 +99,7 @@ export const AdminHome = ({ loading, setLoading, loadingGif }) => {
               </div>
             </Link>
             <Link
-              to="/admin/denuncias/status/dados-insuficientes/"
+              to="/admin/denuncias/status/finalizada-dados-insuficientes/"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
@@ -109,7 +109,7 @@ export const AdminHome = ({ loading, setLoading, loadingGif }) => {
               </div>
             </Link>
             <Link
-              to="/admin/denuncias/"
+              to="/admin/denuncias/todas"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">

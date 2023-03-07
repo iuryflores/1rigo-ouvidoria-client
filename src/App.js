@@ -11,11 +11,11 @@ import {
   Relationship,
   Fraudes,
   Saude,
-  AddForm
+  AddForm,
 } from "./views/index";
 
-import {Ouvidoria} from './views/ouvidoria/index.js'
-import {OuvidoriaForm} from './views/ouvidoria/OuvidoriaForm.js'
+import { Ouvidoria } from "./views/ouvidoria/index.js";
+import { OuvidoriaForm } from "./views/ouvidoria/OuvidoriaForm.js";
 import loadingGif from "./imgs/loading-state.gif";
 import {
   AdminLogin,
@@ -24,7 +24,7 @@ import {
   Denuncia,
   Manifestacoes,
   AllDenuncias,
-  DenunciaByStatus
+  DenunciaByStatus,
 } from "./views/Admin/index.js";
 
 import { Navbar, Footer } from "./components/index";
@@ -42,7 +42,9 @@ function App() {
 
   return (
     <div>
-      {newLocation !== "/admin/" && newLocationOuvidoria !== "/ouvidoria/" && <Navbar />}
+      {newLocation !== "/admin/" && newLocationOuvidoria !== "/ouvidoria/" && (
+        <Navbar />
+      )}
       <Routes>
         <Route
           path="/"
@@ -56,12 +58,7 @@ function App() {
             />
           }
         />
-        <Route
-          path="*"
-          element={
-            <p>Nao encontrado</p>
-          }
-        />
+        <Route path="*" element={<p>Nao encontrado</p>} />
         <Route
           path="/complaints"
           element={
@@ -151,7 +148,7 @@ function App() {
         />
         {/* ADMIN ROUTES */}
         <Route
-          path="/admin/login"
+          path="/admin/denuncias/login"
           element={
             <AdminLogin
               message={message}
@@ -163,7 +160,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/signup"
+          path="/admin//denuncias/signup"
           element={
             <Signup
               message={message}
@@ -174,8 +171,8 @@ function App() {
             />
           }
         />
-         <Route
-          path="/admin/users"
+        <Route
+          path="/admin/denuncias/users"
           element={
             <Users
               message={message}
@@ -187,7 +184,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/home"
+          path="/admin/denuncias/home"
           element={
             <AdminHome
               message={message}
@@ -199,7 +196,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/manifestacoes/"
+          path="/admin/denuncias/manifestacoes/"
           element={
             <Manifestacoes
               message={message}
@@ -211,7 +208,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/denuncias"
+          path="/admin/denuncias/todas"
           element={
             <AllDenuncias
               message={message}
@@ -259,7 +256,7 @@ function App() {
           }
         />
         <Route
-          path="/ouvidoria/"
+          path="/ouvidoria/home"
           element={
             <Ouvidoria
               message={message}
@@ -282,7 +279,7 @@ function App() {
             />
           }
         />
-         <Route
+        <Route
           path="/ouvidoria/tipos"
           element={
             <Tipos
@@ -295,7 +292,9 @@ function App() {
           }
         />
       </Routes>
-      {newLocation !== "/admin/" && newLocationOuvidoria !== "/ouvidoria/" && <Footer />}
+      {newLocation !== "/admin/" && newLocationOuvidoria !== "/ouvidoria/" && (
+        <Footer />
+      )}
     </div>
   );
 }

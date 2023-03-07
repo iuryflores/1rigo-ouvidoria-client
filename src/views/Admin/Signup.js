@@ -14,15 +14,17 @@ export const Signup = ({ message, setMessage }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const [ setMask] = useState("");
+  const entidade = "denuncia";
+
+  const [setMask] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.signup({ full_name, email, password, cpf });
-      setMessage("Usuário criado com sucesso!")
+      await api.signup({ full_name, email, password, cpf, entidade });
+      setMessage("Usuário criado com sucesso!");
       navigate("/admin/login");
     } catch (error) {
       showMessage(error);
