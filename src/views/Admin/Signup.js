@@ -25,7 +25,7 @@ export const Signup = ({ message, setMessage }) => {
     try {
       await api.signup({ full_name, email, password, cpf, entidade });
       setMessage("Usuário criado com sucesso!");
-      navigate("/admin/login");
+      navigate("/admin/denuncias/login");
     } catch (error) {
       showMessage(error);
     }
@@ -102,7 +102,7 @@ export const Signup = ({ message, setMessage }) => {
             Login
           </button>
           <p className="mt-3 small">
-            Já possui uma conta? <Link to="/admin/login">Clique aqui!</Link>
+            Já possui uma conta? <Link to="/admin/denuncias/login">Clique aqui!</Link>
           </p>
         </form>
       </div>

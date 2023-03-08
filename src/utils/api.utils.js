@@ -25,7 +25,7 @@ class Api {
       (error) => {
         if (error.response.status === 401) {
           sessionStorage.removeItem("token");
-          window.location = "/admin/login";
+          window.location = "/admin/denuncias/login";
         }
         throw error;
       }
@@ -186,6 +186,7 @@ class Api {
     }
   };
   /*OUVIDORIA*/
+
   addOuvidoria = async (ouvidoriaData, tipo) => {
     try {
       const { data } = await this.api.post(

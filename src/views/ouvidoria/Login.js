@@ -6,20 +6,21 @@ import logo1RIGO from "../../imgs/logo.png";
 
 import { MsgSucess, MsgError } from "../../components/Shared";
 
-export const AdminLogin = ({ message, setMessage }) => {
+export const OuvidoriaLogin = ({ message, setMessage }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const entidade = "ouvidoria";
+
   const navigate = useNavigate();
 
-  const entidade = "denuncia";
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await api.login({ email, password, entidade });
-      navigate("/admin/denuncias/home");
+      await api.loginOuvidoria({ email, password, entidade });
+      navigate("/admin/ouvidoria/home");
     } catch (error) {
       showMessage(error);
     }
@@ -42,7 +43,7 @@ export const AdminLogin = ({ message, setMessage }) => {
         <h4>Bem vindo</h4>
         <h5 className="d-flex flex-column align-items-center">
           <span className="mb-3">
-            <i className="bi bi-chat-quote "></i> Gerenciador de denúncia
+            <i className="bi bi-chat-quote "></i> Gerenciador Ouvidoria
           </span>
           <img
             className="logo-1rigo mt-3 mb-3"
@@ -77,8 +78,7 @@ export const AdminLogin = ({ message, setMessage }) => {
             Login
           </button>
           <p className="mt-3">
-            Não possui uma conta?{" "}
-            <Link to="/admin/denuncias/signup">Criar</Link>
+            Não possui uma conta? <Link to="/admin/ouvidoria/signup">Criar</Link>
           </p>
         </form>
       </div>

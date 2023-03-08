@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../utils/api.utils";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
 

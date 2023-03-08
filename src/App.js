@@ -31,6 +31,9 @@ import { Navbar, Footer } from "./components/index";
 import { Tipos } from "./views/ouvidoria/Tipos";
 import { Signup } from "./views/Admin/Signup";
 import { Users } from "./views/Admin/Users";
+import { OuvidoriaLogin } from "./views/ouvidoria/Login";
+import { SignupOuvidoria } from "./views/ouvidoria/Signup";
+import { OuvidoriaHome } from "./views/ouvidoria/Home";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -160,7 +163,7 @@ function App() {
           }
         />
         <Route
-          path="/admin//denuncias/signup"
+          path="/admin/denuncias/signup"
           element={
             <Signup
               message={message}
@@ -247,6 +250,43 @@ function App() {
           path="/admin/denuncias/status/:status"
           element={
             <DenunciaByStatus
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
+        {/* OUVIDORIA */}
+        <Route
+          path="/admin/ouvidoria/login"
+          element={
+            <OuvidoriaLogin
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
+        <Route
+          path="/admin/ouvidoria/signup"
+          element={
+            <SignupOuvidoria
+              message={message}
+              setMessage={setMessage}
+              loading={loading}
+              setLoading={setLoading}
+              loadingGif={loadingGif}
+            />
+          }
+        />
+        <Route
+          path="/admin/ouvidoria/home"
+          element={
+            <OuvidoriaHome
               message={message}
               setMessage={setMessage}
               loading={loading}
