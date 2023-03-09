@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/AdminHome.css";
 import api from "../../utils/api.utils";
-import { NavbarAdmin } from "../../components/NavbarAdmin";
 import { FooterAdmin } from "../../components/FooterAdmin";
+import { NavbarAdminOuvidoria } from "../../components/NavAdminOuvidoria";
 
 export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
   const [denuncias, setDenuncias] = useState([]);
@@ -49,7 +49,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
 
   return (
     <div className="admin-home">
-      <NavbarAdmin />
+      <NavbarAdminOuvidoria />
       <hr className="container" />
       {!loading ? (
         <section className="d-flex  justify-content-center">

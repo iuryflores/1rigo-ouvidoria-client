@@ -14,6 +14,8 @@ export const Users = ({ loading, setLoading, message, setMessage }) => {
 
   const navigate = useNavigate();
 
+  const entidade = "denuncias";
+
   if (!userId) {
     sessionStorage.removeItem("userId");
     navigate("/");
@@ -21,7 +23,7 @@ export const Users = ({ loading, setLoading, message, setMessage }) => {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const data = await api.getUsers();
+        const data = await api.getUsers(entidade);
         setUsers(data);
         setTimeout(() => {
           setLoading(false);

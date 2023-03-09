@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logoIHF from "../imgs/iury.png";
+import logo1RIGO from "../imgs/logorigo (1).png";
 
-import "./NavbarAdmin.css";
+import "./NavAdminOuvidoria.css";
 
-export const NavbarAdmin = () => {
+export const NavbarAdminOuvidoria = () => {
   const navigate = useNavigate();
 
   const logout = () => {
@@ -14,13 +14,13 @@ export const NavbarAdmin = () => {
   };
   return (
     <>
-      <nav className="nav-admin">
+      <nav className="nav-ouvidoria-admin">
         <div className="container">
-          <div className="logo">
-            <img src={logoIHF} alt="Logotipo Iury" />
+          <div className="logo-1rigo">
+            <img src={logo1RIGO} alt="Logotipo 1RIGO" />
           </div>
           <div className="top-name">
-            <Link to="/">Canal de Denúncias</Link>
+            <Link to="/"> Ouvidoria 1RIGO</Link>
           </div>
           <ul className="justify-content-end">
             <Link to="/admin/denuncias/home/" className="link no-mobile">

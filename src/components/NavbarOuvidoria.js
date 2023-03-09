@@ -1,23 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logoIHF from "../imgs/iury.png";
 import logo1rigo from "../imgs/logo_white.png";
 
-import "./Navbar.css";
+import "./NavbarOuvidoria.css";
 
 export const NavbarOuvidoria = () => {
   return (
     <>
-      <nav className="navOuvidoria">
+      <nav className="navOuvidoria nav-ouvidoria-admin">
         <div className="container">
-          <div className="logo">
+          <div className="logo-maior">
             <img src={logo1rigo} alt="Logotipo 1RIGO" />
           </div>
-          <div className="logo">
-            <img src={logoIHF} alt="Logotipo Iury" />
-          </div>
-          <div className="logo">
-          <Link to="/">Ouvidoria 1RIGO</Link>
+          <div className="top-name">
+            <Link to="/">Ouvidoria 1RIGO</Link>
           </div>
         </div>
       </nav>
@@ -26,18 +22,7 @@ export const NavbarOuvidoria = () => {
         className=" nav-Ouvidoria mb-2"
         style={{ "--bs-breadcrumb-divider": ">" }}
         aria-label="breadcrumb"
-      >
-        <ol className="breadcrumb breadcrumbOuvidoria">
-          <li className="breadcrumb-item">
-            <a href="./">Página Inicial</a>
-          </li>
-          <li
-            className="breadcrumb-item active"
-            aria-current="page"
-            id="pageName"
-          ></li>
-        </ol>
-      </div>
+      ></div>
     </>
   );
 };

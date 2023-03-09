@@ -7,9 +7,9 @@ import "./Navbar.css";
 export const Navbar = () => {
   return (
     <>
-      <nav>
+      <nav className="nav-denuncia-client">
         <div className="container">
-          <div className="logo">
+          <div className="top-name">
             <Link to="/">Canal de Denúncias</Link>
           </div>
           <div className="logo">
@@ -40,18 +40,7 @@ export const Navbar = () => {
         className="container nav-user mb-2"
         style={{ "--bs-breadcrumb-divider": ">" }}
         aria-label="breadcrumb"
-      >
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <a href="./">Página Inicial</a>
-          </li>
-          <li
-            className="breadcrumb-item active"
-            aria-current="page"
-            id="pageName"
-          ></li>
-        </ol>
-      </div>
+      ></div>
     </>
   );
 };

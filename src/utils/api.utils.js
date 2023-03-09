@@ -48,9 +48,9 @@ class Api {
       throw error.response.data.msg;
     }
   };
-  getUsers = async () => {
+  getUsers = async (entidade) => {
     try {
-      const { data } = await this.api.get("/denuncias/users");
+      const { data } = await this.api.get("/users", entidade);
       return data;
     } catch (error) {
       throw error.response.data.msg;
@@ -58,7 +58,7 @@ class Api {
   };
   getUserLogged = async (userId) => {
     try {
-      const { data } = await this.api.get("/user", userId);
+      const { data } = await this.api.get(`/user/${userId}`);
       return data;
     } catch (error) {
       throw error.response.data.msg;
