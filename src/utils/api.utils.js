@@ -25,7 +25,7 @@ class Api {
       (error) => {
         if (error.response.status === 401) {
           sessionStorage.removeItem("token");
-          window.location = "/admin/denuncias/login";
+          window.location = "/admin/denuncia/login";
         }
         throw error;
       }
@@ -36,6 +36,7 @@ class Api {
       const { data } = await this.api.post("/user/auth/login", loginInfo);
       sessionStorage.setItem("token", data.token);
       sessionStorage.setItem("userId", data.id);
+      sessionStorage.setItem("entidade", data.entidade);
     } catch (error) {
       throw error.response.data.msg;
     }
@@ -192,6 +193,73 @@ class Api {
       const { data } = await this.api.post(
         `/add-ouvidoria/tipos/${tipo}`,
         ouvidoriaData
+      );
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  getOuvidorias = async () => {
+    try {
+      const { data } = await this.api.get(`/admin/ouvidoria/home`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  getOuvidoriaByStatus = async (status) => {
+    try {
+      const { data } = await this.api.get(`/admin/ouvidoria/status/${status}`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  getOuvidoria = async (id) => {
+    try {
+      const { data } = await this.api.get(`/admin/ouvidoria/${id}`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  getAuditByIdOuvidoria = async (ouvidoriaId) => {
+    try {
+      const { data } = await this.api.get(`/admin/ouvidoria/${ouvidoriaId}`);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  addAuditOuvidoria = async (ouvidoriaId, userId) => {
+    try {
+      const { data } = await this.api.post(
+        `/admin/ouvidoria/${ouvidoriaId}`,
+        userId
+      );
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  endAuditOudivoria = async (ouvidoriaId, userId, tipo) => {
+    try {
+      const { data } = await this.api.patch(
+        `/admin/ouvidoria/${ouvidoriaId}`,
+        tipo,
+        userId
+      );
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
+  sendMessageOuvidoria = async (id, messageUser, userId) => {
+    try {
+      const { data } = await this.api.patch(
+        `/admin/ouvidoria/message/${id}`,
+        messageUser,
+        userId
       );
       return data;
     } catch (error) {

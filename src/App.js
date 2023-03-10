@@ -34,6 +34,9 @@ import { Users } from "./views/Admin/Users";
 import { OuvidoriaLogin } from "./views/ouvidoria/Login";
 import { SignupOuvidoria } from "./views/ouvidoria/Signup";
 import { OuvidoriaHome } from "./views/ouvidoria/Home";
+import { PrivateRoute } from "./PrivateRoute";
+import { ManifestacoesByStatus } from "./views/ouvidoria/ManifestacoesByStatus";
+import { Manifestacao } from "./views/ouvidoria/Manifestacao";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -149,7 +152,6 @@ function App() {
             />
           }
         />
-        {/* ADMIN ROUTES */}
         <Route
           path="/admin/denuncias/login"
           element={
@@ -175,91 +177,6 @@ function App() {
           }
         />
         <Route
-          path="/admin/denuncias/users"
-          element={
-            <Users
-              message={message}
-              setMessage={setMessage}
-              loading={loading}
-              setLoading={setLoading}
-              loadingGif={loadingGif}
-            />
-          }
-        />
-        <Route
-          path="/admin/denuncias/home"
-          element={
-            <AdminHome
-              message={message}
-              setMessage={setMessage}
-              loading={loading}
-              setLoading={setLoading}
-              loadingGif={loadingGif}
-            />
-          }
-        />
-        <Route
-          path="/admin/denuncias/manifestacoes/"
-          element={
-            <Manifestacoes
-              message={message}
-              setMessage={setMessage}
-              loading={loading}
-              setLoading={setLoading}
-              loadingGif={loadingGif}
-            />
-          }
-        />
-        <Route
-          path="/admin/denuncias/todas"
-          element={
-            <AllDenuncias
-              message={message}
-              setMessage={setMessage}
-              loading={loading}
-              setLoading={setLoading}
-              loadingGif={loadingGif}
-            />
-          }
-        />
-        <Route
-          path="/admin/denuncias/:categoria"
-          element={
-            <Categoria
-              message={message}
-              setMessage={setMessage}
-              loading={loading}
-              setLoading={setLoading}
-              loadingGif={loadingGif}
-            />
-          }
-        />
-        <Route
-          path="/admin/denuncia/:id"
-          element={
-            <Denuncia
-              message={message}
-              setMessage={setMessage}
-              loading={loading}
-              setLoading={setLoading}
-              loadingGif={loadingGif}
-            />
-          }
-        />
-        <Route
-          path="/admin/denuncias/status/:status"
-          element={
-            <DenunciaByStatus
-              message={message}
-              setMessage={setMessage}
-              loading={loading}
-              setLoading={setLoading}
-              loadingGif={loadingGif}
-            />
-          }
-        />
-        {/* OUVIDORIA */}
-        <Route
           path="/admin/ouvidoria/login"
           element={
             <OuvidoriaLogin
@@ -283,18 +200,131 @@ function App() {
             />
           }
         />
-        <Route
-          path="/admin/ouvidoria/home"
-          element={
-            <OuvidoriaHome
-              message={message}
-              setMessage={setMessage}
-              loading={loading}
-              setLoading={setLoading}
-              loadingGif={loadingGif}
-            />
-          }
-        />
+        {/* ADMIN ROUTES */}
+        <Route element={<PrivateRoute />}>
+          <Route
+            path="/admin/denuncias/users"
+            element={
+              <Users
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/denuncias/home"
+            element={
+              <AdminHome
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/denuncias/manifestacoes/"
+            element={
+              <Manifestacoes
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/denuncias/todas"
+            element={
+              <AllDenuncias
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/denuncias/:categoria"
+            element={
+              <Categoria
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/denuncias/:id"
+            element={
+              <Denuncia
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/denuncias/status/:status"
+            element={
+              <DenunciaByStatus
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          {/* OUVIDORIA */}
+
+          <Route
+            path="/admin/ouvidoria/home"
+            element={
+              <OuvidoriaHome
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/ouvidoria/status/:status"
+            element={
+              <ManifestacoesByStatus
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/ouvidoria/:id"
+            element={
+              <Manifestacao
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+        </Route>
         <Route
           path="/ouvidoria/home"
           element={

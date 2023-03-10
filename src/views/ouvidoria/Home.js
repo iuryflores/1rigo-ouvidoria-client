@@ -6,21 +6,21 @@ import { FooterAdmin } from "../../components/FooterAdmin";
 import { NavbarAdminOuvidoria } from "../../components/NavAdminOuvidoria";
 
 export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
-  const [denuncias, setDenuncias] = useState([]);
+  const [ouvidoria, setOuvidoria] = useState([]);
 
   useEffect(() => {
-    const getDenuncias = async () => {
+    const getOuvidoria = async () => {
       try {
-        const data = await api.getOuvidoria();
-        setDenuncias(data);
+        const data = await api.getOuvidorias();
+        setOuvidoria(data);
         setTimeout(() => {
           setLoading(false);
         }, 2000);
       } catch (error) {
-        console.log(error, "Error to get Denuncias");
+        console.log(error, "Error to get ouvidoria");
       }
     };
-    getDenuncias();
+    getOuvidoria();
   }, [loading, setLoading]);
 
   let totalPendentes = 0;
@@ -29,7 +29,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
   let totalFinalizadosImprocedentes = 0;
   let totalDadosInsuficientes = 0;
 
-  denuncias?.forEach((denuncia) => {
+  ouvidoria?.forEach((denuncia) => {
     if (denuncia.status === "pendente") {
       return totalPendentes++;
     }
@@ -55,7 +55,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
         <section className="d-flex  justify-content-center">
           <div className="d-flex container flex-wrap row">
             <Link
-              to="/admin/denuncias/status/pendente"
+              to="/admin/ouvidoria/status/pendente"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
@@ -65,7 +65,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
               </div>
             </Link>
             <Link
-              to="/admin/denuncias/status/em-andamento/"
+              to="/admin/ouvidoria/status/em-andamento/"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
@@ -75,7 +75,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
               </div>
             </Link>
             <Link
-              to="/admin/denuncias/status/finalizada-procedente/"
+              to="/admin/ouvidoria/status/finalizada-procedente/"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
@@ -87,7 +87,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
               </div>
             </Link>
             <Link
-              to="/admin/denuncias/status/finalizada-improcedente/"
+              to="/admin/ouvidoria/status/finalizada-improcedente/"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
@@ -99,7 +99,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
               </div>
             </Link>
             <Link
-              to="/admin/denuncias/status/finalizada-dados-insuficientes/"
+              to="/admin/ouvidoria/status/finalizada-dados-insuficientes/"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
@@ -109,13 +109,13 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
               </div>
             </Link>
             <Link
-              to="/admin/denuncias/todas"
+              to="/admin/ouvidoria/todas"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
                 <i className="bi bi-box-seam number-stat-home"></i>
-                <p className="p">Total de denúncias recebidas</p>
-                <p className="number-stat-home">{denuncias.length}</p>
+                <p className="p">Total de manifestações recebidas</p>
+                <p className="number-stat-home">{ouvidoria.length}</p>
               </div>
             </Link>
           </div>

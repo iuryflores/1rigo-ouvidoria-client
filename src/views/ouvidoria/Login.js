@@ -11,6 +11,8 @@ export const OuvidoriaLogin = ({ message, setMessage }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+
+
   const entidade = "ouvidoria";
 
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ export const OuvidoriaLogin = ({ message, setMessage }) => {
     e.preventDefault();
 
     try {
-      await api.loginOuvidoria({ email, password, entidade });
+      await api.login({ email, password, entidade });
       navigate("/admin/ouvidoria/home");
     } catch (error) {
       showMessage(error);
@@ -78,7 +80,8 @@ export const OuvidoriaLogin = ({ message, setMessage }) => {
             Login
           </button>
           <p className="mt-3">
-            Não possui uma conta? <Link to="/admin/ouvidoria/signup">Criar</Link>
+            Não possui uma conta?{" "}
+            <Link to="/admin/ouvidoria/signup">Criar</Link>
           </p>
         </form>
       </div>

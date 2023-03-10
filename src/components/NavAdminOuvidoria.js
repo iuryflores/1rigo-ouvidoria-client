@@ -20,26 +20,26 @@ export const NavbarAdminOuvidoria = () => {
             <img src={logo1RIGO} alt="Logotipo 1RIGO" />
           </div>
           <div className="top-name">
-            <Link to="/"> Ouvidoria 1RIGO</Link>
+            <Link to="/admin/ouvidoria/home"> Ouvidoria 1RIGO</Link>
           </div>
           <ul className="justify-content-end">
-            <Link to="/admin/denuncias/home/" className="link no-mobile">
+            <Link to="/admin/ouvidoria/home/" className="link no-mobile">
               <i className="bi bi-house-door-fill"></i>
               <span>HOME</span>
             </Link>
             <Link
-              to="/admin/denuncias/manifestacoes/"
+              to="/admin/ouvidoria/manifestacoes/"
               className="link no-mobile"
             >
               <i className="bi bi-chat-right-quote-fill"></i>
-              <span>DENÚNCIAS</span>
+              <span>MANIFESTAÇÕES</span>
             </Link>
-            <Link to="/admin/denuncias/users/" className="link no-mobile">
+            <Link to="/admin/ouvidoria/users/" className="link no-mobile">
               <i className="bi bi-people-fill"></i>
               <span>USUÁRIOS</span>
             </Link>
             <Link
-              to="/admin/denuncias/login"
+              to="/admin/ouvidoria/login"
               onClick={logout}
               className="link no-mobile"
             >
