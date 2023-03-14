@@ -103,6 +103,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
       setMessage(error);
     }
   };
+  let pendencia = ''
   return (
     <div>
       <NavbarAdminOuvidoria />
@@ -120,7 +121,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
 
           if (days >= 2 && ouvidoria.status !== "finalizado") {
             status = "danger";
-            ouvidoria.status = `Pendente à ${days} dias`;
+            
           }
 
           return (
@@ -156,7 +157,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
                   <></>
                 )}
                 <span className={`btn btn-${status}`}>
-                  {ouvidoria.status.toUpperCase()}
+                  {ouvidoria.status.toUpperCase().replace('-',' ') + pendencia}
                 </span>
               </div>
               <div className="align-mobile d-flex flex-nowrap">
@@ -232,7 +233,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
                 </div>
 
                 {ouvidoria.status === "em-andamento" ? (
-                  <div className="align-mobile auditoria d-flex">
+                  <div className="w-50 align-mobile auditoria d-flex">
                     <div className="card w-100 m-3">
                       <div className="d-flex card-header justify-content-between align-items-center">
                         <h5 className=" mb-0 w-100 text-center">Mensagens</h5>
@@ -340,7 +341,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
               >
                 <form onSubmit={handleAssumir}>
                   <Modal.Header closeButton>
-                    <h6>Deseja assumir o controle desta denúncia?</h6>
+                    <h6>Deseja assumir o controle desta manifestação?</h6>
                   </Modal.Header>
                   <Modal.Body>
                     <p className="d-flex flex-column">
@@ -348,7 +349,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
                         Protocolo n. <b> {ouvidoria.protocolo_id}</b>
                       </span>
                       <span>
-                        Data da denúncia:{" "}
+                        Data da manifestação:{" "}
                         <b>
                           {new Date(
                             ouvidoria.createdAt.slice(0, -1)
@@ -360,13 +361,13 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
                         </b>
                       </span>
                       <span>
-                        Denúncia de <b> {ouvidoria.category}</b>
+                        Manifestação de <b> {ouvidoria.tipo}</b>
                       </span>
                       <span>
                         Reclamante: <b> {ouvidoria.name || "Anônimo"}</b>
                       </span>
                       <span>
-                        Setor ouvidoriado: <b> {ouvidoria.sector}</b>
+                        Etapa atual: <b> {ouvidoria.etapa}</b>
                       </span>
                     </p>
                   </Modal.Body>
@@ -389,7 +390,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
               >
                 <form>
                   <Modal.Header closeButton>
-                    <h6>Deseja finalizar esta denúncia?</h6>
+                    <h6>Deseja finalizar esta manifestação?</h6>
                   </Modal.Header>
                   <Modal.Body>
                     <p className="d-flex flex-column">
@@ -397,7 +398,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
                         Protocolo n. <b> {ouvidoria.protocolo_id}</b>
                       </span>
                       <span>
-                        Data da denúncia:{" "}
+                        Data da manifestação:{" "}
                         <b>
                           {new Date(
                             ouvidoria.createdAt.slice(0, -1)
@@ -409,13 +410,13 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
                         </b>
                       </span>
                       <span>
-                        Denúncia de <b> {ouvidoria.category}</b>
+                        Manifestação de <b> {ouvidoria.tipo}</b>
                       </span>
                       <span>
                         Reclamante: <b> {ouvidoria.name || "Anônimo"}</b>
                       </span>
                       <span>
-                        Setor ouvidoriado: <b> {ouvidoria.sector}</b>
+                        Etapa atual: <b> {ouvidoria.etapa}</b>
                       </span>
                     </p>
                   </Modal.Body>
