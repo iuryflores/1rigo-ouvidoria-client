@@ -65,6 +65,14 @@ class Api {
       throw error.response.data.msg;
     }
   };
+  getUsersOuvidoria = async (entidade) => {
+    try {
+      const { data } = await this.api.get("/admin/ouvidoria/users", entidade);
+      return data;
+    } catch (error) {
+      throw error.response.data.msg;
+    }
+  };
   addComplaint = async (complaintData, category) => {
     try {
       const { data } = await this.api.post(

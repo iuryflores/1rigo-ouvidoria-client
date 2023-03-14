@@ -13,7 +13,7 @@ export const PrivateRoute = () => {
     return validation;
   };
   const isAuth = userAuth();
-  console.log(isAuth);
+
   return (
     <>
       {isAuth ? (

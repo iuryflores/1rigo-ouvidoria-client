@@ -32,9 +32,9 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
   const [messageUser, setMessageUser] = useState("");
 
   useEffect(() => {
-    const getOuvidoria = async () => {
+    const getOuvidorias = async () => {
       try {
-        const data = await api.getOuvidoria(id);
+        const data = await api.getOuvidorias();
         setOuvidorias(data);
         setTimeout(() => {
           setLoading(false);
@@ -43,7 +43,7 @@ export const Manifestacao = ({ loading, setLoading, message, setMessage }) => {
         console.log(error, "Error to get ouvidorias");
       }
     };
-    getOuvidoria();
+    getOuvidorias();
 
     const getAuditById = async () => {
       try {

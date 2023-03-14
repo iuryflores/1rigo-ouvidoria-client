@@ -37,6 +37,9 @@ import { OuvidoriaHome } from "./views/ouvidoria/Home";
 import { PrivateRoute } from "./PrivateRoute";
 import { ManifestacoesByStatus } from "./views/ouvidoria/ManifestacoesByStatus";
 import { Manifestacao } from "./views/ouvidoria/Manifestacao";
+import { Ouvidorias } from "./views/ouvidoria/Ouvidorias";
+import { CategoriasOuvidorias } from "./views/ouvidoria/CategoriasOuvidoria";
+import { UsersOuvidoria } from "./views/ouvidoria/UsersOuvidoria";
 
 function App() {
   const [message, setMessage] = useState(null);
@@ -301,6 +304,18 @@ function App() {
             }
           />
           <Route
+            path="/admin/ouvidoria/manifestacoes/"
+            element={
+              <Ouvidorias
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
             path="/admin/ouvidoria/status/:status"
             element={
               <ManifestacoesByStatus
@@ -313,9 +328,33 @@ function App() {
             }
           />
           <Route
+            path="/admin/ouvidoria/tipo/:categoria/"
+            element={
+              <CategoriasOuvidorias
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
             path="/admin/ouvidoria/:id"
             element={
               <Manifestacao
+                message={message}
+                setMessage={setMessage}
+                loading={loading}
+                setLoading={setLoading}
+                loadingGif={loadingGif}
+              />
+            }
+          />
+          <Route
+            path="/admin/ouvidoria/users/"
+            element={
+              <UsersOuvidoria
                 message={message}
                 setMessage={setMessage}
                 loading={loading}

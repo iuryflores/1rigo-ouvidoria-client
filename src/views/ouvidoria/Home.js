@@ -55,7 +55,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
         <section className="d-flex  justify-content-center">
           <div className="d-flex container flex-wrap row">
             <Link
-              to="/admin/ouvidoria/status/pendente"
+              to="/admin/ouvidoria/status/pendente/"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
@@ -109,7 +109,7 @@ export const OuvidoriaHome = ({ loading, setLoading, loadingGif }) => {
               </div>
             </Link>
             <Link
-              to="/admin/ouvidoria/todas"
+              to="/admin/ouvidoria/todas/"
               className="col-sm-12 col-md-4 col-lg-4 mt-3"
             >
               <div className="card-body">
